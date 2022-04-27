@@ -30,10 +30,19 @@ Attention, nous partons du principe que les paquets pip et venv sont bien instal
 
 4- Pour démarrer ce dernier, saisissez la commande : `source env/bin/activate`
 
-
 5- Pour y installer les paquets nécessaires à la bonne exécution du script, saisissez la commande : `pip install -r requirements.txt`
 
 
 ## Lancement du programme
 
+Attention, avant de lancer le programme, assurez-vous que l'environnement virtuel est activé.
+
+1- Ouvrez l'invite de commandes
+
+2- Déplacez-vous à la racine du dossier ls_chesstournament, à l'aide de la commande cd
+
+3- Si vous êtes sous Windows, saisissez la commande `python src\chesstournament.py`, sous Linux ou MacOSX saisissez la commande `python src/chesstournament.py`
+
+
 ## Utilisation du programme
+
