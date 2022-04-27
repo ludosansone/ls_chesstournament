@@ -1,8 +1,14 @@
 from core.decorators import controller
-from views import home_view
-from views import players_view, add_player_view, list_players_view, player_view
-from views import tournaments_view, add_tournament_view, list_tournaments_view, tournament_view
 from core.example_datas import tournaments_table, players_table
+from views.home import home_view
+from views.players import players_view
+from views.addplayer import add_player_view
+from views.listplayers import list_players_view
+from views.player import player_view
+from views.tournaments import tournaments_view
+from views.addtournament import add_tournament_view
+from views.listtournaments import list_tournaments_view
+from views.tournament import tournament_view
 
 
 @controller
