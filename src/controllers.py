@@ -9,6 +9,7 @@ from views.tournaments import tournaments_view
 from views.addtournament import add_tournament_view
 from views.listtournaments import list_tournaments_view
 from views.tournament import tournament_view
+from models.player import Player
 
 
 @controller
@@ -27,7 +28,15 @@ def players_controller(param=None):
 def add_player_controller(param=None):
     new_player = add_player_view()
     if new_player is not None:
-        print("Ajout du joueur en base")
+        obj_player = Player(
+            new_player['firstname'],
+            new_player['lastname'],
+            new_player['birthday'],
+            new_player['sexe'],
+            new_player['ranking']
+        )
+
+        obj_player.create()
     else:
         print("Annulation de l'ajout")
     return "players_controller"
@@ -35,13 +44,25 @@ def add_player_controller(param=None):
 
 @controller
 def list_players_controller(param=None):
-    results = players_table
+    results = Player.list()
 
-    item_menu = list_players_view(results)
-
-    if item_menu.isdigit() is True:
-        return f"player_controller('{item_menu}')"
+    if results is not None:
+        item_menu = list_players_view(results)
+        if item_menu.isdigit() is True:
+            return f"player_controller('{item_menu}')"
+        else:
+            return item_menu
     else:
+        print("Aucun joueur enregistré pour le moment")
+        return "players_controller"
+
+
+@controller
+def player_controller(param=None):
+    result = Player.read(param)
+
+    if result is not None:
+        item_menu = player_view(result)
         return item_menu
 
 
@@ -79,18 +100,6 @@ def tournament_controller(param=None):
             return item_menu
     print("Tournoi introuvable")
     return "list_tournaments_controller"
-
-
-@controller
-def player_controller(param=None):
-    results = players_table
-
-    for player in results:
-        if player['id'] == param:
-            item_menu = player_view(player)
-            return item_menu
-    print("Joueur introuvable")
-    return "list_players_controller"
 
 
 def exit_controller():
