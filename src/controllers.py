@@ -29,6 +29,8 @@ def add_player_controller(param=None):
     new_player = add_player_view()
     if new_player is not None:
         obj_player = Player(
+            'player',
+            '0',
             new_player['firstname'],
             new_player['lastname'],
             new_player['birthday'],
@@ -44,10 +46,10 @@ def add_player_controller(param=None):
 
 @controller
 def list_players_controller(param=None):
-    results = Player.list()
+    list_players = Player.list()
 
-    if results is not None:
-        item_menu = list_players_view(results)
+    if list_players is not None:
+        item_menu = list_players_view(list_players)
         if item_menu.isdigit() is True:
             return f"player_controller('{item_menu}')"
         else:
@@ -59,12 +61,11 @@ def list_players_controller(param=None):
 
 @controller
 def player_controller(param=None):
-    result = Player.read(param)
+    player = Player.read(param)
 
-    if result is not None:
-        item_menu = player_view(result)
+    if player is not None:
+        item_menu = player_view(player)
         return item_menu
-
 
 @controller
 def tournaments_controller(param=None):

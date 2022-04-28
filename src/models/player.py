@@ -4,12 +4,16 @@ from tinydb import TinyDB, Query
 class Player:
     def __init__(
             self,
+            type="player",
+            id="",
             firstname="",
             lastname="",
             birthday="",
             sexe="",
             ranking=0):
 
+        self.type = type
+        self.id = id,
         self.firstname = firstname
         self.lastname = lastname
         self.birthday = birthday
@@ -23,7 +27,7 @@ class Player:
         new_id = str(player_number + 1)
 
         document_player = {
-            'type': 'player',
+            'type': self.type,
             'id': new_id,
             'firstname': self.firstname,
             'lastname': self.lastname,
@@ -39,7 +43,17 @@ class Player:
         results = db.search(query.id == id)
 
         if results is not []:
-            return results[0]
+            result = results[0]
+            player = Player(
+                result['type'],
+                    result['id'],
+                    result['firstname'],
+                    result['lastname'],
+                    result['birthday'],
+                    result['sexe'],
+                    result['ranking']
+            )
+            return player
         else:
             return None
 
@@ -48,6 +62,18 @@ class Player:
         query = Query()
         results = db.search(query.type == 'player')
         if results is not []:
-            return results
+            list_players = []
+            for result in results:
+                player = Player(
+                    result['type'],
+                    result['id'],
+                    result['firstname'],
+                    result['lastname'],
+                    result['birthday'],
+                    result['sexe'],
+                    result['ranking']
+                )
+                list_players.append(player)
+            return list_players
         else:
             return None
