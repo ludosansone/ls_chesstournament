@@ -86,7 +86,6 @@ def add_tournament_controller(param=None):
         return "add_player_controller"
     else:
         list_players = Player.list()
-
         new_tournament = add_tournament_view(list_players)
         print(new_tournament)
         return "tournaments_controller"

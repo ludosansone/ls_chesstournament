@@ -1,5 +1,6 @@
 from core.decorators import menu
 from core.validators import is_valid_player, is_valid_round_number, is_valid_time_control, is_valid_date
+from core.transformators import get_smart_time_control
 
 
 def add_tournament_view(datas=None):
@@ -44,6 +45,8 @@ def add_tournament_view(datas=None):
     while True:
         round_number = input("Saisissez le nombre de tours du tournoi (4 par défaut) : ")
         if is_valid_round_number(round_number) is True:
+            if round_number == '':
+                round_number = '4'
             break
 
     print("Étape 5 : Configuration de la gestion du temps\n")
@@ -51,8 +54,11 @@ def add_tournament_view(datas=None):
         print("1 - Bullet")
         print("2 - Blitz")
         print("3 - Coup rapide")
-        time_control = input("Entrez votre choix (Vous pouvez laisser vide pour Bullet)")
-        if is_valid_time_control(time_control) is True:
+        choice = input("Entrez votre choix (Vous pouvez laisser vide pour Bullet)").strip()
+        if is_valid_time_control(choice) is True:
+            if choice == '':
+                choice = '1'
+            time_control = get_smart_time_control(choice)
             break
 
     print("Étape 6 : Configuration des dates\n")
