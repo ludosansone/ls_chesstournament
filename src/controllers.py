@@ -98,6 +98,7 @@ def add_tournament_controller(param=None):
             new_tournament['time_control'],
             new_tournament['description']
         )
+        obj_new_tournament.create()
         
         return "tournaments_controller"
 

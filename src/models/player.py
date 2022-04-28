@@ -13,7 +13,7 @@ class Player:
             ranking=0):
 
         self.type = type
-        self.id = id,
+        self.id = id
         self.firstname = firstname
         self.lastname = lastname
         self.birthday = birthday

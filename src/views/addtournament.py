@@ -10,7 +10,7 @@ def add_tournament_view(datas=None):
     name = ""
     place = ""
     players = []
-    round_number = ""
+    rounds_number = ""
     time_control = ""
     begin_date = ""
     end_date = ""
@@ -43,10 +43,10 @@ def add_tournament_view(datas=None):
 
     print("Étape 4 : Configuration du nombre de tours\n")
     while True:
-        round_number = input("Saisissez le nombre de tours du tournoi (4 par défaut) : ")
-        if is_valid_round_number(round_number) is True:
-            if round_number == '':
-                round_number = '4'
+        rounds_number = input("Saisissez le nombre de tours du tournoi (4 par défaut) : ")
+        if is_valid_round_number(rounds_number) is True:
+            if rounds_number == '':
+                rounds_number = '4'
             break
 
     print("Étape 5 : Configuration de la gestion du temps\n")
@@ -84,7 +84,7 @@ def add_tournament_view(datas=None):
         'name': name,
         'place': place,
         'players': players,
-        'round_number': round_number,
+        'rounds_number': rounds_number,
         'time_control': time_control,
         'dates': dates,
         'description': description
