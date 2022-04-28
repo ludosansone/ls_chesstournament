@@ -25,7 +25,7 @@ def add_player_view(datas=None):
     while is_valid_date(player_birthday) is False:
         player_birthday = input("Date d'anniversaire du joueur [jj/mm/aaaa] : ").strip()
 
-    while is_valid_ranking(player_ranking) is False:
+    while is_valid_ranking(player_ranking, datas) is False:
         player_ranking = input("Classement du joueur (Laissez vide pour non-classé : )").strip()
         if player_ranking == "":
             player_ranking = "non-classé"

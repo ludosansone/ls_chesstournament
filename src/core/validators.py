@@ -31,9 +31,13 @@ def is_valid_date(str):
         return True
 
 
-def is_valid_ranking(str):
+def is_valid_ranking(str, list_players):
     if str.isdigit() is True:
         if int(str) > 0:
+            for player in list_players:
+                if str == player.ranking:
+                    print("Position déjà occupée dans s le classement")
+                    return False
             return True
     elif str == "" or str == "non-classé":
         return True
@@ -46,3 +50,28 @@ def is_valid_confirmation(str):
         return True
     else:
         return False
+
+
+def is_valid_player(datas, id):
+    for data in datas:
+        if data.id[0] == id:
+            return True
+    return False
+
+
+def is_valid_round_number(round_number):
+    if round_number == "":
+        round_number = '4'
+    if round_number.isdigit() is True and round_number != '0':
+        return True
+    else:
+        return False
+
+
+def is_valid_time_control(time_control):
+    if time_control == "":
+        time_control = '1'
+    if time_control.isdigit() is True:
+        if int(time_control) > 0 and int(time_control) < 4:
+            return True
+    return False

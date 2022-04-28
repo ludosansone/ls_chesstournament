@@ -4,7 +4,7 @@ class Tournament:
             name="",
             place="",
             dates=[],
-            rounds_number=4,
+            rounds_number="",
             rounds=[],
             players=[],
             time_control="",

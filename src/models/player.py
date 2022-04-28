@@ -22,8 +22,7 @@ class Player:
 
     def create(self):
         db = TinyDB('db.json')
-        query = Query()
-        player_number = len(db.search(query.type == 'player'))
+        player_number = Player.count()
         new_id = str(player_number + 1)
 
         document_player = {
@@ -46,12 +45,12 @@ class Player:
             result = results[0]
             player = Player(
                 result['type'],
-                    result['id'],
-                    result['firstname'],
-                    result['lastname'],
-                    result['birthday'],
-                    result['sexe'],
-                    result['ranking']
+                result['id'],
+                result['firstname'],
+                result['lastname'],
+                result['birthday'],
+                result['sexe'],
+                result['ranking']
             )
             return player
         else:
@@ -77,3 +76,9 @@ class Player:
             return list_players
         else:
             return None
+
+    def count():
+        db = TinyDB('db.json')
+        query = Query()
+        player_number = len(db.search(query.type == 'player'))
+        return player_number

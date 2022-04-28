@@ -26,7 +26,9 @@ def players_controller(param=None):
 
 @controller
 def add_player_controller(param=None):
-    new_player = add_player_view()
+    list_players = Player.list()
+
+    new_player = add_player_view(list_players)
     if new_player is not None:
         obj_player = Player(
             'player',
@@ -37,7 +39,6 @@ def add_player_controller(param=None):
             new_player['sexe'],
             new_player['ranking']
         )
-
         obj_player.create()
     else:
         print("Annulation de l'ajout")
@@ -67,6 +68,7 @@ def player_controller(param=None):
         item_menu = player_view(player)
         return item_menu
 
+
 @controller
 def tournaments_controller(param=None):
     item_menu = tournaments_view()
@@ -75,8 +77,19 @@ def tournaments_controller(param=None):
 
 @controller
 def add_tournament_controller(param=None):
-    item_menu = add_tournament_view()
-    return item_menu
+    player_number = Player.count()
+
+    if player_number < 8:
+        print("Attention : vous avez besoin de 8 joueurs pour créer un tournoi.")
+        print(f"Il vous en manque donc {8 - player_number}.")
+        print("Nous vous redirigeons vers le formulaire d'ajout de joueur. Revenez en suite créer le tournoi")
+        return "add_player_controller"
+    else:
+        list_players = Player.list()
+
+        new_tournament = add_tournament_view(list_players)
+        print(new_tournament)
+        return "tournaments_controller"
 
 
 @controller
