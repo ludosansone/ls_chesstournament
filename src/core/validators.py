@@ -1,3 +1,6 @@
+import re
+
+
 def choice_is_valid(choice, max_index):
     if choice.isdigit() is False:
         return False
@@ -22,7 +25,7 @@ def is_valid_sexe(str):
 
 
 def is_valid_date(str):
-    if len(str) != 10:
+    if re.match(r"\d{2}/\d{2}/\d{4}", str) is None:
         return False
     else:
         return True
