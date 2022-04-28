@@ -10,6 +10,7 @@ from views.addtournament import add_tournament_view
 from views.listtournaments import list_tournaments_view
 from views.tournament import tournament_view
 from models.player import Player
+from models.tournament import Tournament
 
 
 @controller
@@ -87,8 +88,19 @@ def add_tournament_controller(param=None):
     else:
         list_players = Player.list()
         new_tournament = add_tournament_view(list_players)
-        print(new_tournament)
+        obj_new_tournament = Tournament(
+            new_tournament['name'],
+            new_tournament['place'],
+            new_tournament['dates'],
+            new_tournament['rounds_number'],
+            [],
+            new_tournament['players'],
+            new_tournament['time_control'],
+            new_tournament['description']
+        )
+        
         return "tournaments_controller"
+
 
 
 @controller
