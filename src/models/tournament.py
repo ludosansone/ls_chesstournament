@@ -23,6 +23,7 @@ class Tournament:
         self.players = players
         self.time_control = time_control
         self.description = description
+        self.step = "new"
 
     # Méthodes d'instances
     def create(self):
@@ -38,7 +39,8 @@ class Tournament:
             'rounds': self.rounds,
             'players': self.players,
             'time_control': self.time_control,
-            'description': self.description
+            'description': self.description,
+            'step': 'firstroundready'
         }
         db.insert(document_tournament)
 
@@ -61,6 +63,7 @@ class Tournament:
             )
             tournament.type = result['type']
             tournament.id = result['id']
+            tournament.step = result['step']
             return tournament
         else:
             return None
@@ -81,10 +84,11 @@ class Tournament:
                     result['rounds'],
                     result['players'],
                     result['time_control'],
-                    result['description']
+                    result['description'],
                 )
                 tournament.type = result['type']
                 tournament.id = result['id']
+                tournament.step = result['step']
                 list_tournaments.append(tournament)
             return list_tournaments
         else:
@@ -94,4 +98,4 @@ class Tournament:
         db = TinyDB('db.json')
         query = Query()
         tournament_number = len(db.search(query.type == 'tournament'))
-        return tournament_number 
+        return tournament_number
