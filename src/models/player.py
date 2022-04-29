@@ -20,6 +20,7 @@ class Player:
         self.sexe = sexe
         self.ranking = ranking
 
+    # Méthodes d'instance
     def create(self):
         db = TinyDB('db.json')
         player_number = Player.count()
@@ -36,10 +37,11 @@ class Player:
         }
         db.insert(document_player)
 
+    # Méthodes de classe
     def read(id):
         db = TinyDB('db.json')
         query = Query()
-        results = db.search(query.id == id)
+        results = db.search((query.id == id) & (query.type == "player"))
 
         if results is not []:
             result = results[0]

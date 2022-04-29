@@ -68,6 +68,9 @@ def player_controller(param=None):
     if player is not None:
         item_menu = player_view(player)
         return item_menu
+    else:
+        print("Joueur introuvable")
+        return "list_players_controller"
 
 
 @controller
@@ -103,29 +106,31 @@ def add_tournament_controller(param=None):
         return "tournaments_controller"
 
 
-
 @controller
 def list_tournaments_controller(param=None):
-    results = tournaments_table
+    list_tournaments = Tournament.list()
 
-    item_menu = list_tournaments_view(results)
-
-    if item_menu.isdigit() is True:
-        return f"tournament_controller('{item_menu}')"
+    if list_tournaments is not None:
+        item_menu = list_tournaments_view(list_tournaments)
+        if item_menu.isdigit() is True:
+            return f"tournament_controller('{item_menu}')"
+        else:
+            return item_menu
     else:
-        return item_menu
+        print("Aucun tournoi enregistré pour le moment")
+        return "tournaments_controller"
 
 
 @controller
 def tournament_controller(param=None):
-    results = tournaments_table
+    tournament = Tournament.read(param)
 
-    for tournament in results:
-        if tournament['id'] == param:
-            item_menu = tournament_view(tournament)
-            return item_menu
-    print("Tournoi introuvable")
-    return "list_tournaments_controller"
+    if tournament is not None:
+        item_menu = tournament_view(tournament)
+        return item_menu
+    else:
+        print("Tournoi introuvable")
+        return "list_tournaments_controller"
 
 
 def exit_controller():

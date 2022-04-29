@@ -42,7 +42,54 @@ class Tournament:
         }
         db.insert(document_tournament)
 
+    def read(id):
+        db = TinyDB('db.json')
+        query = Query()
+        results = db.search((query.id == id) & (query.type == "tournament"))
+
+        if results is not []:
+            result = results[0]
+            tournament = Tournament(
+                result['name'],
+                result['place'],
+                result['dates'],
+                result['rounds_number'],
+                result['rounds'],
+                result['players'],
+                result['time_control'],
+                result['description']
+            )
+            tournament.type = result['type']
+            tournament.id = result['id']
+            return tournament
+        else:
+            return None
+
     # Méthodes de classe
+    def list():
+        db = TinyDB('db.json')
+        query = Query()
+        results = db.search(query.type == 'tournament')
+        if results is not []:
+            list_tournaments = []
+            for result in results:
+                tournament = Tournament(
+                    result['name'],
+                    result['place'],
+                    result['dates'],
+                    result['rounds_number'],
+                    result['rounds'],
+                    result['players'],
+                    result['time_control'],
+                    result['description']
+                )
+                tournament.type = result['type']
+                tournament.id = result['id']
+                list_tournaments.append(tournament)
+            return list_tournaments
+        else:
+            return None
+
     def count():
         db = TinyDB('db.json')
         query = Query()
