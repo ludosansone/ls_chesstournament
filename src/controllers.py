@@ -102,8 +102,7 @@ def add_tournament_controller(param=None):
             new_tournament['description']
         )
         obj_new_tournament.create()
-
-        return "tournaments_controller"
+        return f"tournament_controller('{obj_new_tournament.id}')"
 
 
 @controller
@@ -131,6 +130,13 @@ def tournament_controller(param=None):
     else:
         print("Tournoi introuvable")
         return "list_tournaments_controller"
+
+
+@controller
+def play_round_controller(param=None):
+    item_menu = play_round_view()
+    return item_menu
+
 
 
 def exit_controller():
