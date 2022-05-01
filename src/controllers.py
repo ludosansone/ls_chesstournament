@@ -130,7 +130,6 @@ def tournament_controller(param=None):
         'players': players
     }
 
-
     if tournament is not None:
         item_menu = tournament_view(datas)
         return item_menu

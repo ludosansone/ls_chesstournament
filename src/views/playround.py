@@ -5,5 +5,5 @@ from core.decorators import menu
 def play_round_view(datas=None):
     print(f"Tour {datas.step}")
     return [
-        {'label': 'Retour aux détails du tournoi', 'id': 'tournament_controller',}
+        {'label': 'Retour aux détails du tournoi', 'id': 'tournament_controller'}
     ]

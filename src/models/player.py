@@ -87,8 +87,6 @@ class Player:
 
     def get_tournament_players(list_id):
         list_player = []
-        db = TinyDB('db.json')
-        query = Query()
 
         for id in list_id:
             player = Player.read(id)

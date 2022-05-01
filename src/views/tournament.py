@@ -22,7 +22,7 @@ def tournament_view(datas=None):
     for player in datas['players']:
         print(f"{player.firstname} {player.lastname}")
     print("")
-    
+
     if datas['tournament'].step == "1":
         print("Avancement : Prêt à démarrer le premier tour\n")
         menu.append({'label': 'Démarrer le premier tour', 'id': f"play_round_controller('{datas['tournament'].id}')"})
