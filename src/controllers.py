@@ -9,6 +9,7 @@ from views.tournaments import tournaments_view
 from views.addtournament import add_tournament_view
 from views.listtournaments import list_tournaments_view
 from views.tournament import tournament_view
+from views.playround import play_round_view
 from models.player import Player
 from models.tournament import Tournament
 
@@ -134,9 +135,10 @@ def tournament_controller(param=None):
 
 @controller
 def play_round_controller(param=None):
-    item_menu = play_round_view()
-    return item_menu
+    tournament = Tournament.read(param)
 
+    item_menu = play_round_view(tournament)
+    return f"{item_menu}('{param}')"
 
 
 def exit_controller():

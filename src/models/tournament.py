@@ -23,7 +23,7 @@ class Tournament:
         self.players = players
         self.time_control = time_control
         self.description = description
-        self.step = "new"
+        self.step = "0"
 
     # Méthodes d'instances
     def create(self):
@@ -40,7 +40,7 @@ class Tournament:
             'players': self.players,
             'time_control': self.time_control,
             'description': self.description,
-            'step': 'firstroundready'
+            'step': '1'
         }
         db.insert(document_tournament)
 

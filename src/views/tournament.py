@@ -18,9 +18,9 @@ def tournament_view(datas=None):
     print(f"Tournoi en {datas.rounds_number} tours")
     print(f"Contrôle du temps : {datas.time_control}")
 
-    if datas.step == "firstroundready":
+    if datas.step == "1":
         print("Avancement : Prêt à démarrer le premier tour\n")
-        menu.append({'label': 'Démarrer le premier tour', 'id': 'home_controller'})
+        menu.append({'label': 'Démarrer le premier tour', 'id': f"play_round_controller('{datas.id}')"})
 
     menu.append({'label': 'Retour à la liste des tournois', 'id': 'list_tournaments_controller'})
     menu.append({'label': 'Retour à la gestion des tournois', 'id': 'tournaments_controller'})
