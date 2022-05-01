@@ -124,9 +124,15 @@ def list_tournaments_controller(param=None):
 @controller
 def tournament_controller(param=None):
     tournament = Tournament.read(param)
+    players = Player.get_tournament_players(tournament.players)
+    datas = {
+        'tournament': tournament,
+        'players': players
+    }
+
 
     if tournament is not None:
-        item_menu = tournament_view(tournament)
+        item_menu = tournament_view(datas)
         return item_menu
     else:
         print("Tournoi introuvable")
