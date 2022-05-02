@@ -1,34 +1,38 @@
 from core.decorators import menu
 
 
-@menu("Détail du tournoi")
-def tournament_view(datas=None):
-    menu = []
+class TournamentView:
+    def print_tournament_details(tournament):
+        print("Détails du Tournoi\n")
+        print(f"{tournament.name}")
+        print(f"{tournament.place}")
+        if tournament.dates[0] == tournament.dates[1]:
+            print(f"Le {tournament.dates[0]}")
+        else:
+            print(f"Du {tournament.dates[0]} au {tournament.dates[1]}\n")
 
-    print(f"{datas['tournament'].name}")
-    print(f"{datas['tournament'].place}")
-    if datas['tournament'].dates[0] == datas['tournament'].dates[1]:
-        print(f"Le {datas['tournament'].dates[0]}")
-    else:
-        print(f"Du {datas['tournament'].dates[0]} au {datas['tournament'].dates[1]}\n")
+        if tournament.description != "":
+            print(f"{tournament.description}\n")
 
-    if datas['tournament'].description != "":
-        print(f"{datas['tournament'].description}\n")
+        print(f"Tournoi en {tournament.rounds_number} tours")
+        print(f"Contrôle du temps : {tournament.time_control}")
+        if tournament.step == "1":
+            print("Avancement : Prêt à démarrer le premier tour\n")
 
-    print(f"Tournoi en {datas['tournament'].rounds_number} tours")
-    print(f"Contrôle du temps : {datas['tournament'].time_control}")
+    def print_tournament_players(players):
+        print("\nParticipants\n")
+        players.sort(key=lambda player: player.lastname)
+        for player in players:
+            print(f"{player.firstname} {player.lastname}")
 
-    print("\nParticipants\n")
-    datas['players'].sort(key = lambda player : player.lastname)
-    for player in datas['players']:
-        print(f"{player.firstname} {player.lastname}")
-    print("")
+    @menu()
+    def print_menu(datas=None):
+        menu = []
 
-    if datas['tournament'].step == "1":
-        print("Avancement : Prêt à démarrer le premier tour\n")
-        menu.append({'label': 'Démarrer le premier tour', 'id': f"play_round_controller('{datas['tournament'].id}')"})
+        if datas.step == "1":
+            menu.append({'label': 'Démarrer le premier tour', 'id': f"play_round_controller('{datas.id}')"})
 
-    menu.append({'label': 'Retour à la liste des tournois', 'id': 'list_tournaments_controller'})
-    menu.append({'label': 'Retour à la gestion des tournois', 'id': 'tournaments_controller'})
+        menu.append({'label': 'Retour à la liste des tournois', 'id': 'list_tournaments_controller'})
+        menu.append({'label': 'Retour à la gestion des tournois', 'id': 'tournaments_controller'})
 
-    return menu
+        return menu

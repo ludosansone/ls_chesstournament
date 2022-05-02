@@ -1,6 +1,5 @@
 from tinydb import TinyDB, Query
 from models.player import Player
-from core.validators import is_valid_score
 
 
 class Tournament:
@@ -71,16 +70,13 @@ class Tournament:
             return None
 
     def get_tournament_ranking(self):
-        i = 0
-
         # On récupère l'ensemble des joueurs participant au tournoi
         players = Player.get_tournament_players(self.players)
-        
+
         # On trie les joueurs selon leur classement général
-        players = sorted(players, key = lambda r : r.ranking)
+        players = sorted(players, key=lambda r: r.ranking)
         return players
 
-        
     # Méthodes de classe
     def list():
         db = TinyDB('db.json')
