@@ -75,3 +75,10 @@ def is_valid_time_control(time_control):
         if int(time_control) > 0 and int(time_control) < 4:
             return True
     return False
+
+
+def is_valid_score(str):
+    if str == '0' or str == '1' or str == '0.5':
+        return True
+    else:
+        return False
