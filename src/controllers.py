@@ -1,5 +1,5 @@
 from core.decorators import controller
-from core.example_datas import tournaments_table, players_table
+
 from views.home import home_view
 from views.players import players_view
 from views.addplayer import add_player_view
@@ -92,6 +92,7 @@ def add_tournament_controller(param=None):
     else:
         list_players = Player.list()
         new_tournament = add_tournament_view(list_players)
+        new_tournament['players'].sort()
         obj_new_tournament = Tournament(
             new_tournament['name'],
             new_tournament['place'],
@@ -142,8 +143,10 @@ def tournament_controller(param=None):
 def play_round_controller(param=None):
     tournament = Tournament.read(param)
 
-    item_menu = play_round_view(tournament)
-    return f"{item_menu}('{param}')"
+    if tournament.step == "1":
+        players = tournament.get_tournament_ranking()
+        play_round_view(players)
+    return f"tournament_controller('{param}')"
 
 
 def exit_controller():

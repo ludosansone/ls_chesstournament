@@ -19,6 +19,7 @@ def tournament_view(datas=None):
     print(f"Contrôle du temps : {datas['tournament'].time_control}")
 
     print("\nParticipants\n")
+    datas['players'].sort(key = lambda player : player.lastname)
     for player in datas['players']:
         print(f"{player.firstname} {player.lastname}")
     print("")

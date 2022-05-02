@@ -1,9 +1,20 @@
-from core.decorators import menu
+from core.validators import is_valid_score
 
 
-@menu("Tournoi en cours")
 def play_round_view(datas=None):
-    print(f"Tour {datas.step}")
-    return [
-        {'label': 'Retour aux détails du tournoi', 'id': 'tournament_controller'}
-    ]
+    i = 0
+
+    # On organise les matchs selon l'algorithme du système suisse des tournois
+    while i < 4:
+        player1 = datas[i]
+        player2 = datas[i + 4]
+        print(f"Match {i + 1} : {player1.firstname} {player1.lastname} contre {player2.firstname} {player2.lastname}")
+        while True:
+            score_player1 = input(f"Saisissez le score de {player1.firstname} {player1.lastname} : ")
+            if is_valid_score(score_player1) is True:
+                break
+        while True:
+            score_player2 = input(f"Saisissez le score de {player2.firstname} {player2.lastname} : ")
+            if is_valid_score(score_player2) is True:
+                break
+        i += 1
