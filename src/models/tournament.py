@@ -109,6 +109,33 @@ class Tournament:
         players = sorted(players, key=lambda r: r.ranking)
         return players
 
+    def get_other_round_players(self):
+        list_players = []
+        round_number = int(self.step) - 2
+        match_number = 0
+
+        while match_number < 4:
+            player1_id = self.rounds[round_number]['matchs'][match_number][0][0]
+            player1_score = float(self.rounds[round_number]['matchs'][match_number][0][1])
+            player2_id = self.rounds[round_number]['matchs'][match_number][1][0]
+            player2_score = float(self.rounds[round_number]['matchs'][match_number][1][1])
+            list_players.append({'player_id': player1_id, 'score': player1_score})
+            list_players.append({'player_id': player2_id, 'score': player2_score})
+            match_number += 1
+
+        # On les trie selon leur nombre de points
+        sorted_list_players = sorted(list_players, key=lambda r: r['score'])
+
+        # On crée la liste d'instances à partir de la liste de dictionnaires
+        list_players_id = []
+
+        for player in sorted_list_players:
+            player_id = player['player_id']
+            list_players_id.append(player_id)
+
+        instance_list_players = Player.get_tournament_players(list_players_id)
+        return instance_list_players
+
     # Méthodes de classe
     def list():
         """

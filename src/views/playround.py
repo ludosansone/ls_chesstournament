@@ -20,7 +20,7 @@ class PlayRoundView:
         i = 0
         j = 1
 
-        # On organise les matchs selon l'algorithme du système suisse des tournois
+        # On déroule les matchs selon l'algorithme du système suisse des tournois
         while i < 8:
             player1 = players[i]
             player2 = players[i + 1]

@@ -147,6 +147,8 @@ def play_round_controller(param=None):
 
     if tournament.step == "1":
         list_round_players = PlayRoundView.get_first_round_players(players)
+    else:
+        list_round_players = tournament.get_other_round_players()
 
     round = PlayRoundView.print_view(list_round_players)
     tournament.rounds.append(round)
