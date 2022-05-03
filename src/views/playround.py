@@ -18,13 +18,13 @@ class PlayRoundView:
         round = {}
         matchs = []
         i = 0
-        match_number = 1
+        j = 1
 
         # On organise les matchs selon l'algorithme du système suisse des tournois
         while i < 8:
             player1 = players[i]
             player2 = players[i + 1]
-            print(f"Match {match_number} : {player1.firstname} {player1.lastname} VS {player2.firstname} {player2.lastname}")
+            print(f"Match {j} : {player1.firstname} {player1.lastname} VS {player2.firstname} {player2.lastname}")
             while True:
                 score_player1 = input(f"Saisissez le score de {player1.firstname} {player1.lastname} : ")
                 if is_valid_score(score_player1) is True:
@@ -44,7 +44,7 @@ class PlayRoundView:
             match = (match_list_1, match_list_2)
             matchs.append(match)
             i += 2
-            match_number += 1
+            j += 1
         round['name'] = "Round 1"
         round['matchs'] = matchs
         return round
