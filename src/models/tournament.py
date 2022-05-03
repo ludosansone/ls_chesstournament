@@ -28,6 +28,10 @@ class Tournament:
 
     # Méthodes d'instances
     def create(self):
+        """
+            Création d'un nouveau tournoi en base de donnée
+        """
+
         db = TinyDB('db.json')
 
         document_tournament = {
@@ -46,6 +50,10 @@ class Tournament:
         db.insert(document_tournament)
 
     def read(id):
+        """
+            Récupération du tournoi en base de donnée, dont l'identifiant est placé en paramètre
+        """
+
         db = TinyDB('db.json')
         query = Query()
         results = db.search((query.id == id) & (query.type == "tournament"))
@@ -69,16 +77,44 @@ class Tournament:
         else:
             return None
 
-    def get_tournament_ranking(self):
+    def update(self):
+        """
+            Actualisation du tournoi en base de donnée
+        """
+
+        db = TinyDB('db.json')
+        query = Query()
+
+        db.update({
+            'name': self.name,
+            'place': self.place,
+            'dates': self.dates,
+            'rounds_number': self.rounds_number,
+            'rounds': self.rounds,
+            'players': self.players,
+            'time_control': self.time_control,
+            'description': self.description,
+            'step': self.step,
+        }, (query.id == self.id) & (query.type == "tournament"))
+
+    def get_tournament_first_ranking(self):
+        """
+            Classement des joueurs pour le premier round du tournoi, en fonction de leur position au classement général
+        """
+
         # On récupère l'ensemble des joueurs participant au tournoi
         players = Player.get_tournament_players(self.players)
 
-        # On trie les joueurs selon leur classement général
+        # On trie les joueurs selon leur classement général au sein du club
         players = sorted(players, key=lambda r: r.ranking)
         return players
 
     # Méthodes de classe
     def list():
+        """
+            Récupération de la liste de l'ensemble des tournois
+        """
+
         db = TinyDB('db.json')
         query = Query()
         results = db.search(query.type == 'tournament')
@@ -104,6 +140,10 @@ class Tournament:
             return None
 
     def count():
+        """
+            Comptage du nombre de tournois en base de donéées
+        """
+
         db = TinyDB('db.json')
         query = Query()
         tournament_number = len(db.search(query.type == 'tournament'))
