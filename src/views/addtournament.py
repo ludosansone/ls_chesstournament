@@ -77,7 +77,7 @@ class AddTournamentView:
                 break
 
         print("Éttape 7 : Description\n")
-        description = input("Vous pouvez saisir une description pour le tournoi (Laissez vide si vous le souhaitez) : ")
+        description = input("Saisissez une description pour le tournoi (Laissez vide si vous le souhaitez) : ")
 
         print("Étape 8 : Génération des paires de joueurs\n")
 

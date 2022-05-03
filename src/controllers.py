@@ -13,7 +13,6 @@ from views.tournament import TournamentView
 from views.playround import PlayRoundView
 
 
-
 @controller
 def home_controller(param=None):
     item_menu = HomeView.print_menu()
@@ -29,9 +28,9 @@ def players_controller(param=None):
 @controller
 def add_player_controller(param=None):
     list_players = Player.list()
-    
+
     form_result = AddPlayerView.get_form_result(list_players)
-    
+
     if form_result is not None:
         player = Player(
             'player',
@@ -95,7 +94,7 @@ def add_tournament_controller(param=None):
         return "add_player_controller"
     else:
         list_players = Player.list()
-        form_result= AddTournamentView.get_form_result(list_players)
+        form_result = AddTournamentView.get_form_result(list_players)
         form_result['players'].sort()
         tournament = Tournament(
             form_result['name'],
@@ -147,7 +146,8 @@ def play_round_controller(param=None):
 
     if tournament.step == "1":
         players = tournament.get_tournament_ranking()
-        PlayRoundView.print_view(players)
+        round = PlayRoundView.print_view(players)
+        print(round)
     return f"tournament_controller('{param}')"
 
 
