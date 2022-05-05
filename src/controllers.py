@@ -11,7 +11,7 @@ from views.addtournament import AddTournamentView
 from views.listtournaments import ListTournamentsView
 from views.tournament import TournamentView
 from views.playround import PlayRoundView
-
+from views.generalranking import GeneralRankingView
 
 @controller
 def home_controller(param=None):
@@ -144,7 +144,7 @@ def tournament_controller(param=None):
 def play_round_controller(param=None):
     tournament = Tournament.read(param)
     players = tournament.get_tournament_first_ranking()
-    
+
 
     if tournament.step == "1":
         list_round_players = PlayRoundView.get_first_round_players(players)
@@ -164,6 +164,13 @@ def play_round_controller(param=None):
     tournament.update()
 
     return f"tournament_controller('{param}')"
+
+
+@controller
+def general_ranking_controller(param=None):
+    players = Player.get_general_ranking()
+    item_menu = GeneralRankingView.print_menu(players)
+    return item_menu
 
 
 def exit_controller():

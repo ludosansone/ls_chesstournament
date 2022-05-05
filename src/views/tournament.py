@@ -27,7 +27,7 @@ class TournamentView:
 
     def print_tournament_players(players):
         print("\nParticipants\n")
-        players.sort(key=lambda player: player.lastname)
+        players.sort(key=lambda player: int(player.ranking))
         for player in players:
             print(f"{player.firstname} {player.lastname}")
 

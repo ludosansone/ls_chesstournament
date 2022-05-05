@@ -7,5 +7,6 @@ class PlayersView:
         return [
             {'label': 'Ajouter un Joueur', 'id': 'add_player_controller'},
             {'label': 'lister les Joueurs', 'id': 'list_players_controller'},
+            {'label': 'Voir le classement général', 'id': 'general_ranking_controller'},
             {'label': 'Retourner au menu principal', 'id': 'home_controller'},
         ]

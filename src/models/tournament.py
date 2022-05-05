@@ -105,9 +105,10 @@ class Tournament:
         # On récupère l'ensemble des joueurs participant au tournoi
         players = Player.get_tournament_players(self.players)
 
-        # On trie les joueurs selon leur classement général au sein du club
-        players = sorted(players, key=lambda r: r.ranking)
+        # On trie les joueurs selon leur classement général
+        players = sorted(players, key=lambda p: p.ranking)
         return players
+
 
     def update_ranking(self):
         step = int(self.step)
@@ -140,15 +141,9 @@ class Tournament:
         # On récupère le classement général des joueurs du tournoi
         general_ranking = self.get_tournament_first_ranking()
 
-        # Si 2 joueurs ont un score égal, on les classe selon leur rang au classement général
-        first_ranking_index = 0
+        # Si 2 joueurs ont un score égal, on les classe selon leur rang au classement précédent du tournoi
+        
 
-        while first_ranking_index < 8 :
-            if first_ranking_index < 7:
-                pass
-            first_ranking_index += 1
-
-        print(last_ranking)
         return first_ranking
 
     def get_other_round_players(self):

@@ -10,7 +10,7 @@ class Player:
             lastname="",
             birthday="",
             sexe="",
-            ranking=0):
+            ranking=""):
 
         self.type = type
         self.id = id
@@ -92,3 +92,9 @@ class Player:
             player = Player.read(id)
             list_player.append(player)
         return list_player
+
+    def get_general_ranking():
+        players = Player.list()
+
+        general_ranking = sorted(players, key = lambda p: p.ranking)
+        return general_ranking
