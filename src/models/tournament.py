@@ -111,7 +111,7 @@ class Tournament:
 
     def update_ranking(self):
         step = int(self.step)
-        ranking = []
+        first_ranking = []
         last_ranking = []
 
         # On met à jour le classement du tournoi selon le total de points des joueurs
@@ -134,16 +134,22 @@ class Tournament:
                 if player_found == 1:
                     break
                 round_number += 1
-            ranking.append(dict_player)
-        ranking.sort(key = lambda r: r['points'], reverse=True)
+            first_ranking.append(dict_player)
+        first_ranking.sort(key = lambda r: r['points'], reverse=True)
 
         # On récupère le classement général des joueurs du tournoi
         general_ranking = self.get_tournament_first_ranking()
 
         # Si 2 joueurs ont un score égal, on les classe selon leur rang au classement général
-        
+        first_ranking_index = 0
 
-        return ranking
+        while first_ranking_index < 8 :
+            if first_ranking_index < 7:
+                pass
+            first_ranking_index += 1
+
+        print(last_ranking)
+        return first_ranking
 
     def get_other_round_players(self):
         list_players = []

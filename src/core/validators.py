@@ -39,9 +39,7 @@ def is_valid_ranking(str, list_players):
                     print("Position déjà occupée dans s le classement")
                     return False
             return True
-    elif str == "" or str == "non-classé":
-        return True
-    else:
+    elif str == "":
         return False
 
 

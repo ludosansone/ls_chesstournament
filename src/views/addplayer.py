@@ -7,7 +7,7 @@ class AddPlayerView:
         player_lastname = ""
         player_sexe = ""
         player_birthday = ""
-        player_ranking = "unknown"
+        player_ranking = ""
         user_confirmation = "unknown"
 
         while is_valid_string(player_firstname) is False:
@@ -27,9 +27,7 @@ class AddPlayerView:
             player_birthday = input("Date d'anniversaire du joueur [jj/mm/aaaa] : ").strip()
 
         while is_valid_ranking(player_ranking, datas) is False:
-            player_ranking = input("Classement du joueur (Laissez vide pour non-classé : )").strip()
-            if player_ranking == "":
-                player_ranking = "non-classé"
+            player_ranking = input("Position du joueur dans le Classement : )").strip()
 
         print("\nRésumé\n")
 
