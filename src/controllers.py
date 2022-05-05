@@ -144,12 +144,15 @@ def tournament_controller(param=None):
 def play_round_controller(param=None):
     tournament = Tournament.read(param)
     players = tournament.get_tournament_first_ranking()
+    
 
     if tournament.step == "1":
         list_round_players = PlayRoundView.get_first_round_players(players)
     else:
+        new_ranking = tournament.update_ranking()
         list_round_players = tournament.get_other_round_players()
 
+    
     round = PlayRoundView.print_view(list_round_players)
     tournament.rounds.append(round)
     if int(tournament.step) < int(tournament.rounds_number):

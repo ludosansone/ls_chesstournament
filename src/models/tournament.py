@@ -109,6 +109,42 @@ class Tournament:
         players = sorted(players, key=lambda r: r.ranking)
         return players
 
+    def update_ranking(self):
+        step = int(self.step)
+        ranking = []
+        last_ranking = []
+
+        # On met à jour le classement du tournoi selon le total de points des joueurs
+        for player in self.players:
+            player_found = 0
+            dict_player = {'player': player, 'points': 0}
+            round_number = 0
+            while round_number < step:
+                match_number = 0
+                while match_number < 4:
+                    player_position = 0
+                    while player_position < 2:
+                        player_id = self.rounds[round_number]['matchs'][match_number][player_position][0]
+                        if player_id == player:
+                            points = self.rounds[round_number]['matchs'][match_number][player_position][1]
+                            dict_player['points'] += float(points)
+                            player_found = 1
+                        player_position += 1
+                    match_number += 1
+                if player_found == 1:
+                    break
+                round_number += 1
+            ranking.append(dict_player)
+        ranking.sort(key = lambda r: r['points'], reverse=True)
+
+        # On récupère le classement général des joueurs du tournoi
+        general_ranking = self.get_tournament_first_ranking()
+
+        # Si 2 joueurs ont un score égal, on les classe selon leur rang au classement général
+        
+
+        return ranking
+
     def get_other_round_players(self):
         list_players = []
         round_number = int(self.step) - 2
