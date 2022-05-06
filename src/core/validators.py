@@ -32,7 +32,7 @@ def is_valid_date(str):
 
 
 def is_valid_ranking(str, list_players):
-    
+
     if str.isdigit() is True:
         if int(str) > 0:
             for player in list_players:

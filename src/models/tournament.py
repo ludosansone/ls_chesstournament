@@ -109,11 +109,13 @@ class Tournament:
         players = sorted(players, key=lambda p: p.ranking)
         return players
 
-
     def update_ranking(self):
         step = int(self.step)
         first_ranking = []
         last_ranking = []
+
+        # On récupère l'ancien classement des joueurs du tournoi, il servira en cas d'égalité
+        old_tournament_ranking = self.get_tournament_first_ranking()
 
         # On met à jour le classement du tournoi selon le total de points des joueurs
         for player in self.players:
@@ -136,15 +138,43 @@ class Tournament:
                     break
                 round_number += 1
             first_ranking.append(dict_player)
-        first_ranking.sort(key = lambda r: r['points'], reverse=True)
+        first_ranking.sort(key=lambda r: r['points'], reverse=True)
 
-        # On récupère le classement général des joueurs du tournoi
-        general_ranking = self.get_tournament_first_ranking()
+        # On réuni dans une même sous-liste les joueurs ayant le même score
+        first_ranking_index = 0
+        sub_ranking_index = 0
+        sub_ranking = []
+        list_sub_ranking = []
 
-        # Si 2 joueurs ont un score égal, on les classe selon leur rang au classement précédent du tournoi
-        
+        while first_ranking_index < 8:
+            if first_ranking_index < 7:
+                if first_ranking[first_ranking_index]['points'] == first_ranking[first_ranking_index + 1]['points']:
+                    sub_ranking.append(first_ranking[first_ranking_index])
+                    sub_ranking_index += 1
+                else:
+                    sub_ranking.append(first_ranking[first_ranking_index])
+                    list_sub_ranking.append(sub_ranking)
+                    sub_ranking = []
+                    sub_ranking_index = 0
+            else:
+                sub_ranking.append(first_ranking[first_ranking_index])
+                list_sub_ranking.append(sub_ranking)
+            first_ranking_index += 1
 
-        return first_ranking
+        # Pour chaque sous-liste, on trie les joueurs en fonction de leur ancien classement
+        for sub_list in list_sub_ranking:
+            for player in sub_list:
+                player_index = 0
+                while player_index < 8:
+                    if player['player'] == old_tournament_ranking[player_index].id:
+                        player['ranking'] = old_tournament_ranking[player_index].ranking
+                        break
+                    player_index += 1
+            sub_list.sort(key=lambda p: int(p['ranking']))
+            for player in sub_list:
+                last_ranking.append(player)
+
+        return last_ranking
 
     def get_other_round_players(self):
         list_players = []
@@ -160,7 +190,7 @@ class Tournament:
             list_players.append({'player_id': player2_id, 'score': player2_score})
             match_number += 1
 
-        # On les trie selon leur nombre de points
+        # On trie les joueurs selon leur nombre de points
         sorted_list_players = sorted(list_players, key=lambda r: r['score'])
 
         # On crée la liste d'instances à partir de la liste de dictionnaires

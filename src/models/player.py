@@ -96,5 +96,5 @@ class Player:
     def get_general_ranking():
         players = Player.list()
 
-        general_ranking = sorted(players, key = lambda p: p.ranking)
+        general_ranking = sorted(players, key=lambda p: p.ranking)
         return general_ranking
