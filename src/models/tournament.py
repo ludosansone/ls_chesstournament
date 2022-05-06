@@ -1,3 +1,4 @@
+from functools import cmp_to_key
 from tinydb import TinyDB, Query
 from models.player import Player
 
@@ -102,81 +103,20 @@ class Tournament:
             Classement des joueurs pour le premier round du tournoi, en fonction de leur position au classement général
         """
 
-        # On récupère l'ensemble des joueurs participant au tournoi
-        players = Player.get_tournament_players(self.players)
+        # On récupère l'ensemble des instances des joueurs participant au tournoi
+        instance_list_players = Player.get_tournament_players(self.players)
 
         # On trie les joueurs selon leur classement général
-        players = sorted(players, key=lambda p: p.ranking)
-        return players
+        instance_list_players.sort(key=lambda p: p.ranking)
 
-    def update_ranking(self):
-        step = int(self.step)
-        first_ranking = []
-        last_ranking = []
-
-        # On récupère l'ancien classement des joueurs du tournoi, il servira en cas d'égalité
-        old_tournament_ranking = self.get_tournament_first_ranking()
-
-        # On met à jour le classement du tournoi selon le total de points des joueurs
-        for player in self.players:
-            player_found = 0
-            dict_player = {'player': player, 'points': 0}
-            round_number = 0
-            while round_number < step:
-                match_number = 0
-                while match_number < 4:
-                    player_position = 0
-                    while player_position < 2:
-                        player_id = self.rounds[round_number]['matchs'][match_number][player_position][0]
-                        if player_id == player:
-                            points = self.rounds[round_number]['matchs'][match_number][player_position][1]
-                            dict_player['points'] += float(points)
-                            player_found = 1
-                        player_position += 1
-                    match_number += 1
-                if player_found == 1:
-                    break
-                round_number += 1
-            first_ranking.append(dict_player)
-        first_ranking.sort(key=lambda r: r['points'], reverse=True)
-
-        # On réuni dans une même sous-liste les joueurs ayant le même score
-        first_ranking_index = 0
-        sub_ranking_index = 0
-        sub_ranking = []
-        list_sub_ranking = []
-
-        while first_ranking_index < 8:
-            if first_ranking_index < 7:
-                if first_ranking[first_ranking_index]['points'] == first_ranking[first_ranking_index + 1]['points']:
-                    sub_ranking.append(first_ranking[first_ranking_index])
-                    sub_ranking_index += 1
-                else:
-                    sub_ranking.append(first_ranking[first_ranking_index])
-                    list_sub_ranking.append(sub_ranking)
-                    sub_ranking = []
-                    sub_ranking_index = 0
-            else:
-                sub_ranking.append(first_ranking[first_ranking_index])
-                list_sub_ranking.append(sub_ranking)
-            first_ranking_index += 1
-
-        # Pour chaque sous-liste, on trie les joueurs en fonction de leur ancien classement
-        for sub_list in list_sub_ranking:
-            for player in sub_list:
-                player_index = 0
-                while player_index < 8:
-                    if player['player'] == old_tournament_ranking[player_index].id:
-                        player['ranking'] = old_tournament_ranking[player_index].ranking
-                        break
-                    player_index += 1
-            sub_list.sort(key=lambda p: int(p['ranking']))
-            for player in sub_list:
-                last_ranking.append(player)
-
-        return last_ranking
+        return instance_list_players
 
     def get_other_round_players(self):
+        """
+            Classement des joueurs pour les autres rounds du tournoi
+        """
+
+        # On récupère les joueurs avec leur score des tours précédents, dans une liste de dictionnaires
         list_players = []
         round_number = int(self.step) - 2
         match_number = 0
@@ -184,23 +124,28 @@ class Tournament:
         while match_number < 4:
             player1_id = self.rounds[round_number]['matchs'][match_number][0][0]
             player1_score = float(self.rounds[round_number]['matchs'][match_number][0][1])
+            player1 = Player.read(player1_id)
+            player1_ranking = player1.ranking
             player2_id = self.rounds[round_number]['matchs'][match_number][1][0]
             player2_score = float(self.rounds[round_number]['matchs'][match_number][1][1])
-            list_players.append({'player_id': player1_id, 'score': player1_score})
-            list_players.append({'player_id': player2_id, 'score': player2_score})
+            player2 = Player.read(player2_id)
+            player2_ranking = player2.ranking
+            list_players.append({'player_id': player1_id, 'score': player1_score, 'ranking': player1_ranking})
+            list_players.append({'player_id': player2_id, 'score': player2_score, 'ranking': player2_ranking})
             match_number += 1
 
-        # On trie les joueurs selon leur nombre de points
-        sorted_list_players = sorted(list_players, key=lambda r: r['score'])
+        # On trie les joueurs selon leur nombre de points, ou selon leur rang en cas d'égalité
+        list_players.sort(key=cmp_to_key(Tournament.compare))
 
-        # On crée la liste d'instances à partir de la liste de dictionnaires
-        list_players_id = []
+        # On met à jour le classement du tournoi
+        self.players = []
 
-        for player in sorted_list_players:
-            player_id = player['player_id']
-            list_players_id.append(player_id)
+        for player in list_players:
+            self.players.append(player['player_id'])
 
-        instance_list_players = Player.get_tournament_players(list_players_id)
+        # On récupère la liste des instances des joueurs, dans l'ordre du nouveau classement
+        instance_list_players = Player.get_tournament_players(self.players)
+
         return instance_list_players
 
     # Méthodes de classe
@@ -242,3 +187,14 @@ class Tournament:
         query = Query()
         tournament_number = len(db.search(query.type == 'tournament'))
         return tournament_number
+
+    def compare(p1, p2):
+        if p1['score'] > p2['score']:
+            return -1
+        elif p1['score'] < p2['score']:
+            return 1
+        else:
+            if p1['ranking'] > p2['ranking']:
+                return 1
+            elif p1['ranking'] < p2['ranking']:
+                return -1

@@ -128,10 +128,15 @@ def list_tournaments_controller(param=None):
 
 @controller
 def tournament_controller(param=None):
+    players = []
     tournament = Tournament.read(param)
-    players = Player.get_tournament_players(tournament.players)
 
     if tournament is not None:
+        if tournament.step == "1":
+            players = tournament.get_tournament_first_ranking()
+        else:
+            players = tournament.get_other_round_players()
+
         TournamentView.print_tournament_details(tournament)
         TournamentView.print_tournament_players(players)
         item_menu = TournamentView.print_menu(tournament)
@@ -144,13 +149,11 @@ def tournament_controller(param=None):
 @controller
 def play_round_controller(param=None):
     tournament = Tournament.read(param)
-    
 
     if tournament.step == "1":
         players = tournament.get_tournament_first_ranking()
         list_round_players = PlayRoundView.get_first_round_players(players)
     else:
-        players = tournament.update_ranking()
         list_round_players = tournament.get_other_round_players()
 
     round = PlayRoundView.print_view(list_round_players)

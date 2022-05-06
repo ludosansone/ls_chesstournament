@@ -84,7 +84,7 @@ class Player:
         query = Query()
         player_number = len(db.search(query.type == 'player'))
         return player_number
-
+        
     def get_tournament_players(list_id):
         list_player = []
 
