@@ -27,7 +27,7 @@ class TournamentView:
 
     def print_tournament_players(players):
         print("\nParticipants\n")
-        
+
         for player in players:
             print(f"{player.firstname} {player.lastname}")
 

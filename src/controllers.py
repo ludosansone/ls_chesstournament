@@ -151,7 +151,7 @@ def play_round_controller(param=None):
     tournament = Tournament.read(param)
 
     if tournament.step == "1":
-        players = tournament.get_tournament_first_ranking()
+        tournament.get_tournament_first_ranking()
         list_round_players = tournament.get_first_round_players()
     elif tournament.step != "finish":
         list_round_players = tournament.get_other_round_players()

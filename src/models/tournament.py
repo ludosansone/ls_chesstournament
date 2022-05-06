@@ -114,7 +114,6 @@ class Tournament:
 
         for player in instance_list_players:
             self.players.append(player.id)
-
         return instance_list_players
 
     def get_first_round_players(self):
@@ -129,7 +128,7 @@ class Tournament:
             i += 1
         instance_first_round_players = Player.get_tournament_players(first_round_players)
 
-        return instance_first_round_players 
+        return instance_first_round_players
 
     def get_other_round_players(self):
         """

@@ -10,12 +10,12 @@ class Round:
         matchs=[]
     ):
 
-    self.id = str(Round.count() + 1)
-    self.document_type = "round"
-    self.name = name
-    self.begin = begin
-    self.end = end
-    self.matchs = matchs
+        self.id = str(Round.count() + 1)
+        self.document_type = "round"
+        self.name = name
+        self.begin = begin
+        self.end = end
+        self.matchs = matchs
 
     # méthodes d'instance
     def create(self):
@@ -26,7 +26,7 @@ class Round:
             'name': self.name,
             'begin': self.begin,
             'end': self.end,
-            'matchs': matchs
+            'matchs': self.matchs
         }
         db.insert(document_round)
 
@@ -48,7 +48,6 @@ class Round:
             return round
         else:
             return None
-
 
     # Méthodes de classe
     def count():
