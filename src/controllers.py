@@ -128,7 +128,7 @@ def list_tournaments_controller(param=None):
 
 @controller
 def tournament_controller(param=None):
-    players = []
+    # players = []
     tournament = Tournament.read(param)
 
     if tournament is not None:
@@ -155,16 +155,19 @@ def play_round_controller(param=None):
         list_round_players = tournament.get_first_round_players()
     elif tournament.step != "finish":
         list_round_players = tournament.get_other_round_players()
-    if tournament.step != "finish"        :
-        round = PlayRoundView.print_view(list_round_players)
-        tournament.rounds.append(round)
+    round = PlayRoundView.print_view(list_round_players)
+    round['name'] = f"Round{tournament.step}"
+    print(round)
+    tournament.rounds.append(round)
+
+    if tournament.step != "finish":
         if int(tournament.step) < int(tournament.rounds_number):
             new_step = int(tournament.step) + 1
             tournament.step = str(new_step)
         else:
             tournament.step = "finish"
-        tournament.update()
 
+    tournament.update()
     return f"tournament_controller('{param}')"
 
 

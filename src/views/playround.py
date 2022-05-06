@@ -33,6 +33,5 @@ class PlayRoundView:
             matchs.append(match)
             i += 2
             j += 1
-        round['name'] = "Round 1"
         round['matchs'] = matchs
         return round
