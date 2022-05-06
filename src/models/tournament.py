@@ -148,7 +148,7 @@ class Tournament:
 
         return instance_list_players
 
-    # Méthodes de classe
+    # Méthodes de class
     def list():
         """
             Récupération de la liste de l'ensemble des tournois
@@ -198,3 +198,5 @@ class Tournament:
                 return 1
             elif p1['ranking'] < p2['ranking']:
                 return -1
+            else:
+                return 0
