@@ -152,19 +152,18 @@ def play_round_controller(param=None):
 
     if tournament.step == "1":
         players = tournament.get_tournament_first_ranking()
-        list_round_players = PlayRoundView.get_first_round_players(players)
-    else:
+        list_round_players = tournament.get_first_round_players()
+    elif tournament.step != "finish":
         list_round_players = tournament.get_other_round_players()
-
-    round = PlayRoundView.print_view(list_round_players)
-    tournament.rounds.append(round)
-    if int(tournament.step) < int(tournament.rounds_number):
-        new_step = int(tournament.step) + 1
-        tournament.step = str(new_step)
-    else:
-        tournament.step = "finish"
-
-    tournament.update()
+    if tournament.step != "finish"        :
+        round = PlayRoundView.print_view(list_round_players)
+        tournament.rounds.append(round)
+        if int(tournament.step) < int(tournament.rounds_number):
+            new_step = int(tournament.step) + 1
+            tournament.step = str(new_step)
+        else:
+            tournament.step = "finish"
+        tournament.update()
 
     return f"tournament_controller('{param}')"
 

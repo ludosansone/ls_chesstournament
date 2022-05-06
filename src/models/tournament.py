@@ -109,7 +109,27 @@ class Tournament:
         # On trie les joueurs selon leur classement général
         instance_list_players.sort(key=lambda p: p.ranking)
 
+        # On met à jour le classement du tournoi
+        self.players = []
+
+        for player in instance_list_players:
+            self.players.append(player.id)
+
         return instance_list_players
+
+    def get_first_round_players(self):
+        first_round_players = []
+        i = 0
+
+        while i < 4:
+            player1 = self.players[i]
+            player2 = self.players[i + 4]
+            first_round_players.append(player1)
+            first_round_players.append(player2)
+            i += 1
+        instance_first_round_players = Player.get_tournament_players(first_round_players)
+
+        return instance_first_round_players 
 
     def get_other_round_players(self):
         """
@@ -118,8 +138,11 @@ class Tournament:
 
         # On récupère les joueurs avec leur score des tours précédents, dans une liste de dictionnaires
         list_players = []
-        round_number = int(self.step) - 2
         match_number = 0
+        if self.step != "finish":
+            round_number = int(self.step) - 2
+        else:
+            round_number = int(self.rounds_number)
 
         while match_number < 4:
             player1_id = self.rounds[round_number]['matchs'][match_number][0][0]

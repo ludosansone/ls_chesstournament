@@ -2,18 +2,6 @@ from core.validators import is_valid_score
 
 
 class PlayRoundView:
-    def get_first_round_players(players):
-        first_round_players = []
-        i = 0
-
-        while i < 4:
-            player1 = players[i]
-            player2 = players[i + 4]
-            first_round_players.append(player1)
-            first_round_players.append(player2)
-            i += 1
-        return first_round_players
-
     def print_view(players):
         round = {}
         matchs = []
