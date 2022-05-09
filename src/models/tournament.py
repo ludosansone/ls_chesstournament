@@ -1,6 +1,7 @@
 from functools import cmp_to_key
 from tinydb import TinyDB, Query
 from models.player import Player
+from models.round import Round
 
 
 class Tournament:
@@ -128,6 +129,12 @@ class Tournament:
             i += 1
         instance_first_round_players = Player.get_tournament_players(first_round_players)
 
+        # On met à jour le classement du tournoi
+        self.players = []
+
+        for player in instance_first_round_players:
+            self.players.append(player.id)
+
         return instance_first_round_players
 
     def get_other_round_players(self):
@@ -135,21 +142,24 @@ class Tournament:
             Classement des joueurs pour les autres rounds du tournoi
         """
 
+        rounds = Round.get_tournament_rounds(self.rounds)
+
         # On récupère les joueurs avec leur score des tours précédents, dans une liste de dictionnaires
         list_players = []
         match_number = 0
+
         if self.step != "finish":
             round_number = int(self.step) - 2
         else:
             round_number = int(self.rounds_number)
 
         while match_number < 4:
-            player1_id = self.rounds[round_number]['matchs'][match_number][0][0]
-            player1_score = float(self.rounds[round_number]['matchs'][match_number][0][1])
+            player1_id = rounds[round_number].matchs[match_number][0][0]
+            player1_score = float(rounds[round_number].matchs[match_number][0][1])
             player1 = Player.read(player1_id)
             player1_ranking = player1.ranking
-            player2_id = self.rounds[round_number]['matchs'][match_number][1][0]
-            player2_score = float(self.rounds[round_number]['matchs'][match_number][1][1])
+            player2_id = rounds[round_number].matchs[match_number][1][0]
+            player2_score = float(rounds[round_number].matchs[match_number][1][1])
             player2 = Player.read(player2_id)
             player2_ranking = player2.ranking
             list_players.append({'player_id': player1_id, 'score': player1_score, 'ranking': player1_ranking})

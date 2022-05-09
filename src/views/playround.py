@@ -1,9 +1,11 @@
 from core.validators import is_valid_score
+from datetime import datetime
 
 
 class PlayRoundView:
     def print_view(players):
         round = {}
+        round['begin'] = str(datetime.now())
         matchs = []
         i = 0
         j = 1
@@ -34,4 +36,5 @@ class PlayRoundView:
             i += 2
             j += 1
         round['matchs'] = matchs
+        round['end'] = str(datetime.now())
         return round

@@ -22,6 +22,7 @@ class Round:
         db = TinyDB('db.json')
 
         document_round = {
+            'id': self.id,
             'document_type': self.document_type,
             'name': self.name,
             'begin': self.begin,
@@ -62,4 +63,25 @@ class Round:
             dont les identifiants se trouvent dans la liste placée en paramètre
         """
 
-        pass
+        instance_list_rounds = []
+        db = TinyDB('db.json')
+        query = Query()
+        
+        for id in rounds_id:
+            results = db.search((query.id == id) & (query.document_type == "round"))
+
+            result = results[0]
+            round = Round(
+                result['name'],
+                result['begin'],
+                result['end'],
+                result['matchs'],
+            )
+            round.document_type = "round"
+            round.id = result['id']
+            instance_list_rounds.append(round)
+
+        if instance_list_rounds != []:
+            return instance_list_rounds
+        else:
+            return None

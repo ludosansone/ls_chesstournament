@@ -1,6 +1,7 @@
 from core.decorators import controller
 from models.player import Player
 from models.tournament import Tournament
+from models.round import Round
 from views.home import HomeView
 from views.players import PlayersView
 from views.addplayer import AddPlayerView
@@ -133,13 +134,15 @@ def tournament_controller(param=None):
 
     if tournament is not None:
         if tournament.step == "1":
-            players = tournament.get_tournament_first_ranking()
-        else:
-            players = tournament.get_other_round_players()
+            tournament.get_tournament_first_ranking()
+        elif tournament.step != "finish":
+            tournament.get_other_round_players()
 
         TournamentView.print_tournament_details(tournament)
-        TournamentView.print_tournament_players(players)
+        TournamentView.print_tournament_players(Player.get_tournament_players(tournament.players))
+        
         item_menu = TournamentView.print_menu(tournament)
+        
         return item_menu
     else:
         print("Tournoi introuvable")
@@ -155,10 +158,18 @@ def play_round_controller(param=None):
         list_round_players = tournament.get_first_round_players()
     elif tournament.step != "finish":
         list_round_players = tournament.get_other_round_players()
-    round = PlayRoundView.print_view(list_round_players)
-    round['name'] = f"Round{tournament.step}"
-    print(round)
-    tournament.rounds.append(round)
+
+    dict_round = PlayRoundView.print_view(list_round_players)
+    dict_round['name'] = f"Round{tournament.step}"
+    instance_round = Round(
+        dict_round['name'],
+        dict_round['begin'],
+        dict_round['end'],
+        dict_round['matchs']
+    )
+    instance_round.create()
+
+    tournament.rounds.append(instance_round.id)
 
     if tournament.step != "finish":
         if int(tournament.step) < int(tournament.rounds_number):
