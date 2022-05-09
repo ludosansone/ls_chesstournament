@@ -79,7 +79,7 @@ class AddTournamentView:
         print("Éttape 7 : Description\n")
         description = input("Saisissez une description pour le tournoi (Laissez vide si vous le souhaitez) : ")
 
-        print("Étape 8 : Génération des paires de joueurs\n")
+        print("Ajout du tournoi en base de données")
 
         return {
             'name': name,
