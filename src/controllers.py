@@ -13,6 +13,7 @@ from views.listtournaments import ListTournamentsView
 from views.tournament import TournamentView
 from views.playround import PlayRoundView
 from views.generalranking import GeneralRankingView
+from views.rounds import RoundsView
 
 
 @controller
@@ -142,7 +143,7 @@ def tournament_controller(param=None):
         TournamentView.print_tournament_players(Player.get_tournament_players(tournament.players))
         
         item_menu = TournamentView.print_menu(tournament)
-        
+
         return item_menu
     else:
         print("Tournoi introuvable")
@@ -186,6 +187,15 @@ def play_round_controller(param=None):
 def general_ranking_controller(param=None):
     players = Player.get_general_ranking()
     item_menu = GeneralRankingView.print_menu(players)
+    return item_menu
+
+
+@controller
+def rounds_controller(param=None):
+    tournament = Tournament.read(param)
+    rounds = Round.get_tournament_rounds(tournament.rounds)
+    RoundsView.print_rounds(rounds)
+    item_menu = RoundsView.print_menu(param)
     return item_menu
 
 

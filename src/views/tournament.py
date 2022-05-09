@@ -38,7 +38,7 @@ class TournamentView:
 
         if datas.step != "finish":
             menu.append({'label': f"Démarrer le tour {datas.step}", 'id': f"play_round_controller('{datas.id}')"})
-
+        menu.append({'label': 'Voir le détail des tours terminés', 'id': f"rounds_controller('{datas.id}')"})
         menu.append({'label': 'Retour à la liste des tournois', 'id': 'list_tournaments_controller'})
         menu.append({'label': 'Retour à la gestion des tournois', 'id': 'tournaments_controller'})
 
