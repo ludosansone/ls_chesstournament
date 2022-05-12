@@ -202,7 +202,9 @@ def rounds_controller(param=None):
 
 @controller
 def change_player_ranking_controller(param=None):
-    ChangePlayerRankingView.print_view()
+    player = Player.read(param)
+
+    ChangePlayerRankingView.print_view(player)
     return f"player_controller('{param}')"
 
 def exit_controller():

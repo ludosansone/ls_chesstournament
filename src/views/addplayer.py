@@ -26,8 +26,12 @@ class AddPlayerView:
         while is_valid_date(player_birthday) is False:
             player_birthday = input("Date d'anniversaire du joueur [jj/mm/aaaa] : ").strip()
 
-        while is_valid_ranking(player_ranking, datas) is False:
-            player_ranking = input("Position du joueur dans le Classement : ").strip()
+        while True:
+            player_ranking = input("Classement du joueur (Laissez vide pour un classement au bas du tableau): ").strip()
+            if is_valid_ranking(player_ranking, datas) is True:
+                if player_ranking == "":
+                    player_ranking = str(len(datas) + 1)
+                break
 
         print("\nRésumé\n")
 

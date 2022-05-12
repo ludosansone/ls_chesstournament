@@ -32,17 +32,22 @@ def is_valid_date(str):
 
 
 def is_valid_ranking(str, list_players):
-
     if str.isdigit() is True:
         if int(str) > 0:
-            for player in list_players:
-                if int(str) == int(player.ranking):
-                    print("Position déjà occupée dans s le classement")
-                    return False
+            if int(str) > (len(list_players) + 1):
+                print("Position de classement trop élevée par rapport au nombre de joueurs")
+                return False
+            else:
+                for player in list_players:
+                    if int(str) == int(player.ranking):
+                        print("Position déjà occupée dans s le classement")
+                        return False
             return True
         else:
             return False
-    elif str == "" or str.isdigit() is False:
+    elif str == "":
+        return True
+    elif str.isdigit() is False:
         return False
 
 
