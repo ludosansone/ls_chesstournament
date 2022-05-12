@@ -50,7 +50,7 @@ class Tournament:
             'step': '1'
         }
         db.insert(document_tournament)
-    
+
     def update(self):
         """
             Actualisation du tournoi en base de donnée
@@ -103,7 +103,7 @@ class Tournament:
             first_round_players.append(player1)
             first_round_players.append(player2)
             i += 1
-        
+
         # On récupère la liste des instances de joueurs, prêts à disputer le premier tour
         instance_first_round_players = Player.get_tournament_players(first_round_players)
 

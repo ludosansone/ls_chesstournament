@@ -128,7 +128,7 @@ class Player:
         """
             Récupération de la liste de l'ensemble des joueurs
         """
-        
+
         db = TinyDB('db.json')
         query = Query()
         results = db.search(query.type == 'player')
