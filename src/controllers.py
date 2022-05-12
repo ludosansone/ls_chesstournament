@@ -14,6 +14,7 @@ from views.tournament import TournamentView
 from views.playround import PlayRoundView
 from views.generalranking import GeneralRankingView
 from views.rounds import RoundsView
+from views.changeplayerranking import ChangePlayerRankingView
 
 
 @controller
@@ -73,7 +74,7 @@ def player_controller(param=None):
 
     if player is not None:
         PlayerView.print_view(player)
-        item_menu = PlayerView.print_menu()
+        item_menu = PlayerView.print_menu(player)
         return item_menu
     else:
         print("Joueur introuvable")
@@ -198,6 +199,11 @@ def rounds_controller(param=None):
     item_menu = RoundsView.print_menu(param)
     return item_menu
 
+
+@controller
+def change_player_ranking_controller(param=None):
+    ChangePlayerRankingView.print_view()
+    return f"player_controller('{param}')"
 
 def exit_controller():
     print("A bientôt dans Chess Tournament")

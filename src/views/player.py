@@ -10,6 +10,7 @@ class PlayerView:
     @menu("Détail du Joueur")
     def print_menu(datas=None):
         return [
+            {'label': 'Modifier le classement du joueur', 'id': f"change_player_ranking_controller('{datas.id}')"},
             {'label': 'Retour à la liste des joueurs', 'id': 'list_players_controller'},
             {'label': 'Retour à la gestion des joueurs', 'id': 'players_controller'},
         ]
