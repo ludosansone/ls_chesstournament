@@ -55,6 +55,46 @@ class Player:
             'ranking': self.ranking
         }, (query.id == self.id) & (query.type == "player"))
 
+    def change_ranking(self, new_player_ranking):
+        """
+            Changement de la position du joueur dans le classement général
+        """
+
+        list_players = Player.list()
+        old_player_ranking = self.ranking
+        new_list_players = []
+        i = 0
+
+        # On trie la liste des joueurs par ordre de classement
+        list_players.sort(key=lambda p: int(p.ranking))
+
+        # On déplace le joueur dans le classement
+        if int(new_player_ranking) < int(old_player_ranking):
+            for item_player in list_players:
+                if new_player_ranking == item_player.ranking:
+                    new_list_players.append(self)
+                if old_player_ranking == item_player.ranking:
+                    continue
+                new_list_players.append(item_player)
+        elif int(new_player_ranking) > int(old_player_ranking):
+            for item_player in list_players:
+                if old_player_ranking == item_player.ranking:
+                    continue
+                if int(new_player_ranking) + 1 == int(item_player.ranking):
+                    new_list_players.append(self)
+                new_list_players.append(item_player)
+            if int(new_player_ranking) == len(list_players):
+                new_list_players.append(self)
+
+        # On réordonne l'ensemble du classement
+        while i < len(new_list_players):
+            new_list_players[i].ranking = str(i + 1)
+            i += 1
+
+        # On met à jour le classement en base de données
+        for item_player in new_list_players:
+            item_player.update()
+
     # Méthodes de classe
     def read(id):
         db = TinyDB('db.json')

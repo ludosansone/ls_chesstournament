@@ -204,10 +204,9 @@ def rounds_controller(param=None):
 def change_player_ranking_controller(param=None):
     player = Player.read(param)
 
-    list_players = ChangePlayerRankingView.print_view(player)
+    new_player_ranking = ChangePlayerRankingView.print_view(player)
+    player.change_ranking(new_player_ranking)
 
-    for item_player in list_players:
-        item_player.update()
     return f"player_controller('{param}')"
 
 
