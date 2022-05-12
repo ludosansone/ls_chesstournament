@@ -22,6 +22,10 @@ class Player:
 
     # Méthodes d'instance
     def create(self):
+        """
+            création d'un nouveau joueur en base de données
+        """
+
         db = TinyDB('db.json')
         player_number = Player.count()
         new_id = str(player_number + 1)
@@ -97,6 +101,10 @@ class Player:
 
     # Méthodes de classe
     def read(id):
+        """
+            Récupération du joueur en base de donnée, dont l'identifiant est placé en paramètre
+        """
+
         db = TinyDB('db.json')
         query = Query()
         results = db.search((query.id == id) & (query.type == "player"))
@@ -117,6 +125,10 @@ class Player:
             return None
 
     def list():
+        """
+            Récupération de la liste de l'ensemble des joueurs
+        """
+        
         db = TinyDB('db.json')
         query = Query()
         results = db.search(query.type == 'player')
@@ -138,12 +150,20 @@ class Player:
             return None
 
     def count():
+        """
+            Comptage du nombre de joueurs en base de donées
+        """
+
         db = TinyDB('db.json')
         query = Query()
         player_number = len(db.search(query.type == 'player'))
         return player_number
 
     def get_tournament_players(list_id):
+        """
+            Récupération des joueurs d'un tournoi, grace à la liste d'identifiants placée en paramètre
+        """
+
         list_player = []
 
         for id in list_id:
@@ -152,6 +172,10 @@ class Player:
         return list_player
 
     def get_general_ranking():
+        """
+            Classement général des joueurs du club
+        """
+
         players = Player.list()
 
         general_ranking = sorted(players, key=lambda p: p.ranking)

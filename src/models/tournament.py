@@ -50,35 +50,7 @@ class Tournament:
             'step': '1'
         }
         db.insert(document_tournament)
-
-    def read(id):
-        """
-            Récupération du tournoi en base de donnée, dont l'identifiant est placé en paramètre
-        """
-
-        db = TinyDB('db.json')
-        query = Query()
-        results = db.search((query.id == id) & (query.type == "tournament"))
-
-        if results is not []:
-            result = results[0]
-            tournament = Tournament(
-                result['name'],
-                result['place'],
-                result['dates'],
-                result['rounds_number'],
-                result['rounds'],
-                result['players'],
-                result['time_control'],
-                result['description']
-            )
-            tournament.type = result['type']
-            tournament.id = result['id']
-            tournament.step = result['step']
-            return tournament
-        else:
-            return None
-
+    
     def update(self):
         """
             Actualisation du tournoi en base de donnée
@@ -118,6 +90,10 @@ class Tournament:
         return instance_list_players
 
     def get_first_round_players(self):
+        """
+            consttitution des paires de joueurs pour le premier tour du tournoi
+        """
+
         first_round_players = []
         i = 0
 
@@ -127,9 +103,11 @@ class Tournament:
             first_round_players.append(player1)
             first_round_players.append(player2)
             i += 1
+        
+        # On récupère la liste des instances de joueurs, prêts à disputer le premier tour
         instance_first_round_players = Player.get_tournament_players(first_round_players)
 
-        # On met à jour le classement du tournoi
+        # On réorganise la liste des joueurs du tournoi, en fonction des paires de joueurs constituées
         self.players = []
 
         for player in instance_first_round_players:
@@ -139,7 +117,7 @@ class Tournament:
 
     def get_other_round_players(self):
         """
-            Classement des joueurs pour les autres rounds du tournoi
+            constitution des paires de joueurs pour les autres rounds du tournoi
         """
 
         rounds = Round.get_tournament_rounds(self.rounds)
@@ -169,18 +147,46 @@ class Tournament:
         # On trie les joueurs selon leur nombre de points, ou selon leur rang en cas d'égalité
         list_players.sort(key=cmp_to_key(Tournament.compare))
 
-        # On met à jour le classement du tournoi
+        # On réorganise la liste des joueurs du tournoi, avec les paires nouvellement constituées
         self.players = []
 
         for player in list_players:
             self.players.append(player['player_id'])
 
-        # On récupère la liste des instances des joueurs, dans l'ordre du nouveau classement
+        # On récupère la liste des instances des joueurs, dans l'ordre de la dernière réorganisation
         instance_list_players = Player.get_tournament_players(self.players)
 
         return instance_list_players
 
     # Méthodes de class
+    def read(id):
+        """
+            Récupération du tournoi en base de donnée, dont l'identifiant est placé en paramètre
+        """
+
+        db = TinyDB('db.json')
+        query = Query()
+        results = db.search((query.id == id) & (query.type == "tournament"))
+
+        if results is not []:
+            result = results[0]
+            tournament = Tournament(
+                result['name'],
+                result['place'],
+                result['dates'],
+                result['rounds_number'],
+                result['rounds'],
+                result['players'],
+                result['time_control'],
+                result['description']
+            )
+            tournament.type = result['type']
+            tournament.id = result['id']
+            tournament.step = result['step']
+            return tournament
+        else:
+            return None
+
     def list():
         """
             Récupération de la liste de l'ensemble des tournois
@@ -212,7 +218,7 @@ class Tournament:
 
     def count():
         """
-            Comptage du nombre de tournois en base de donéées
+            Comptage du nombre de tournois en base de donées
         """
 
         db = TinyDB('db.json')
@@ -221,6 +227,10 @@ class Tournament:
         return tournament_number
 
     def compare(p1, p2):
+        """
+            Fonction auxilière, permettant la constitution des paires de joueurs à partir du second tour
+        """
+
         if p1['score'] > p2['score']:
             return -1
         elif p1['score'] < p2['score']:

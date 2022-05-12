@@ -19,6 +19,10 @@ class Round:
 
     # méthodes d'instance
     def create(self):
+        """
+            création d'un nouveau tour en base de données
+        """
+
         db = TinyDB('db.json')
 
         document_round = {
@@ -32,6 +36,10 @@ class Round:
         db.insert(document_round)
 
     def read(self):
+        """
+            Récupération du tour en base de données
+        """
+
         db = TinyDB('db.json')
         query = Query()
         results = db.search((query.id == self.id) & (query.document_type == "round"))
@@ -52,6 +60,10 @@ class Round:
 
     # Méthodes de classe
     def count():
+        """
+            Comptage du nombre de tours en base de données
+        """
+
         db = TinyDB('db.json')
         query = Query()
         round_number = len(db.search(query.document_type == 'round'))
@@ -59,8 +71,7 @@ class Round:
 
     def get_tournament_rounds(rounds_id):
         """
-            Récupération des rounds en base de donnée,
-            dont les identifiants se trouvent dans la liste placée en paramètre
+            Récupération des tours d'un tournoi en base de donnée grace à la liste d'identifiants placée en paramètre
         """
 
         instance_list_rounds = []
