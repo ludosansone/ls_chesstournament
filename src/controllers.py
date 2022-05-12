@@ -204,8 +204,12 @@ def rounds_controller(param=None):
 def change_player_ranking_controller(param=None):
     player = Player.read(param)
 
-    ChangePlayerRankingView.print_view(player)
+    list_players = ChangePlayerRankingView.print_view(player)
+
+    for item_player in list_players:
+        item_player.update()
     return f"player_controller('{param}')"
+
 
 def exit_controller():
     print("A bientôt dans Chess Tournament")

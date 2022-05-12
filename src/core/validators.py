@@ -51,6 +51,17 @@ def is_valid_ranking(str, list_players):
         return False
 
 
+def is_valid_change_ranking(str, datas):
+    if str == "" or str.isdigit() is False:
+        return False
+    elif int(str) > len(datas):
+        print("Position de classement trop élevée par rapport au nombre de joueurs")
+        return False
+    elif int(str) < 0:
+        return False
+    return True
+
+
 def is_valid_confirmation(str):
     if str == "o" or str == "n":
         return True

@@ -27,7 +27,7 @@ class AddPlayerView:
             player_birthday = input("Date d'anniversaire du joueur [jj/mm/aaaa] : ").strip()
 
         while True:
-            player_ranking = input("Classement du joueur (Laissez vide pour un classement au bas du tableau): ").strip()
+            player_ranking = input("Position du joueur, Laissez vide pour un classement au bas du tableau : ").strip()
             if is_valid_ranking(player_ranking, datas) is True:
                 if player_ranking == "":
                     player_ranking = str(len(datas) + 1)

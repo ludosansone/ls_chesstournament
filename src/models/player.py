@@ -37,6 +37,24 @@ class Player:
         }
         db.insert(document_player)
 
+    def update(self):
+        """
+            Actualisation du joueuren base de donnée
+        """
+
+        db = TinyDB('db.json')
+        query = Query()
+
+        db.update({
+            'type': self.type,
+            'id': self.id,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'birthday': self.birthday,
+            'sexe': self.sexe,
+            'ranking': self.ranking
+        }, (query.id == self.id) & (query.type == "player"))
+
     # Méthodes de classe
     def read(id):
         db = TinyDB('db.json')
