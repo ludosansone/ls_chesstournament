@@ -27,14 +27,13 @@ class TournamentView:
 
     def print_tournament_players(players):
         print("\nParticipants\n")
-        
+
         for player in players:
             print(f"{player.firstname} {player.lastname}")
 
     @menu()
     def print_menu(datas=None):
         menu = []
-        
 
         if datas.step != "finish":
             menu.append({'label': f"Démarrer le tour {datas.step}", 'id': f"play_round_controller('{datas.id}')"})

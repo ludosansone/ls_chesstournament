@@ -141,7 +141,7 @@ def tournament_controller(param=None):
 
         TournamentView.print_tournament_details(tournament)
         TournamentView.print_tournament_players(Player.get_tournament_players(tournament.players))
-        
+
         item_menu = TournamentView.print_menu(tournament)
 
         return item_menu

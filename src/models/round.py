@@ -66,7 +66,7 @@ class Round:
         instance_list_rounds = []
         db = TinyDB('db.json')
         query = Query()
-        
+
         for id in rounds_id:
             results = db.search((query.id == id) & (query.document_type == "round"))
 
