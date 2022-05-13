@@ -1,4 +1,5 @@
 from tinydb import TinyDB, Query
+from models.playerdelegate import PlayerDelegate
 
 
 class Player:
@@ -23,7 +24,7 @@ class Player:
     # Méthodes d'instance
     def create(self):
         """
-            création d'un nouveau joueur en base de données
+            Création d'un nouveau joueur en base de données
         """
 
         db = TinyDB('db.json')
@@ -64,33 +65,15 @@ class Player:
             Changement de la position du joueur dans le classement général
         """
 
-        list_players = Player.list()
-        old_player_ranking = self.ranking
-        new_list_players = []
-        i = 0
-
         # On trie la liste des joueurs par ordre de classement
+        list_players = Player.list()
         list_players.sort(key=lambda p: int(p.ranking))
 
-        # On déplace le joueur dans le classement
-        if int(new_player_ranking) < int(old_player_ranking):
-            for item_player in list_players:
-                if new_player_ranking == item_player.ranking:
-                    new_list_players.append(self)
-                if old_player_ranking == item_player.ranking:
-                    continue
-                new_list_players.append(item_player)
-        elif int(new_player_ranking) > int(old_player_ranking):
-            for item_player in list_players:
-                if old_player_ranking == item_player.ranking:
-                    continue
-                if int(new_player_ranking) + 1 == int(item_player.ranking):
-                    new_list_players.append(self)
-                new_list_players.append(item_player)
-            if int(new_player_ranking) == len(list_players):
-                new_list_players.append(self)
-
-        # On réordonne l'ensemble du classement
+        # On déplace le joueur dans le classement, puis on retourne la liste réordonnée
+        new_list_players = PlayerDelegate.move_player_ranking(self, new_player_ranking, list_players)
+        
+        # On met à jour la propriété ranking de l'ensemble des joueurs
+        i = 0
         while i < len(new_list_players):
             new_list_players[i].ranking = str(i + 1)
             i += 1
@@ -183,5 +166,6 @@ class Player:
 
         players = Player.list()
 
-        general_ranking = sorted(players, key=lambda p: p.ranking)
+        # On trie les joueurs en fonction de leur propriété ranking
+        general_ranking = sorted(players, key=lambda p: int(p.ranking))
         return general_ranking
