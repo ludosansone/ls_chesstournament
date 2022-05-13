@@ -1,9 +1,8 @@
 class PlayerDelegate:
     @classmethod
-    def move_player_ranking(cls, player, new_player_ranking, list_players ):
+    def move_player_ranking(cls, player, new_player_ranking, list_players):
         old_player_ranking = player.ranking
         new_list_players = []
-        i = 0
 
         if int(new_player_ranking) < int(old_player_ranking):
             for item_player in list_players:

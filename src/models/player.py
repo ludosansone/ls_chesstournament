@@ -5,16 +5,14 @@ from models.playerdelegate import PlayerDelegate
 class Player:
     def __init__(
             self,
-            type="player",
-            id="",
             firstname="",
             lastname="",
             birthday="",
             sexe="",
             ranking=""):
 
-        self.type = type
-        self.id = id
+        self.type = "player"
+        self.id = str(Player.count() + 1)
         self.firstname = firstname
         self.lastname = lastname
         self.birthday = birthday
@@ -28,12 +26,10 @@ class Player:
         """
 
         db = TinyDB('db.json')
-        player_number = Player.count()
-        new_id = str(player_number + 1)
 
         document_player = {
             'type': self.type,
-            'id': new_id,
+            'id': self.id,
             'firstname': self.firstname,
             'lastname': self.lastname,
             'birthday': self.birthday,
@@ -71,7 +67,7 @@ class Player:
 
         # On déplace le joueur dans le classement, puis on retourne la liste réordonnée
         new_list_players = PlayerDelegate.move_player_ranking(self, new_player_ranking, list_players)
-        
+
         # On met à jour la propriété ranking de l'ensemble des joueurs
         i = 0
         while i < len(new_list_players):
@@ -96,14 +92,15 @@ class Player:
         if results is not []:
             result = results[0]
             player = Player(
-                result['type'],
-                result['id'],
                 result['firstname'],
                 result['lastname'],
                 result['birthday'],
                 result['sexe'],
                 result['ranking']
             )
+            player.type = result['type']
+            player.id = result['id']
+
             return player
         else:
             return None
@@ -121,14 +118,14 @@ class Player:
             list_players = []
             for result in results:
                 player = Player(
-                    result['type'],
-                    result['id'],
                     result['firstname'],
                     result['lastname'],
                     result['birthday'],
                     result['sexe'],
                     result['ranking']
                 )
+                player.type = result['type']
+                player.id = result['id']
                 list_players.append(player)
             return list_players
         else:

@@ -37,8 +37,6 @@ def add_player_controller(param=None):
 
     if form_result is not None:
         player = Player(
-            'player',
-            '0',
             form_result['firstname'],
             form_result['lastname'],
             form_result['birthday'],
