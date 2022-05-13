@@ -100,7 +100,8 @@ class Player:
             item_player.update()
 
     # Méthodes de classe
-    def read(id):
+    @classmethod
+    def read(cls, id):
         """
             Récupération du joueur en base de donnée, dont l'identifiant est placé en paramètre
         """
@@ -124,7 +125,8 @@ class Player:
         else:
             return None
 
-    def list():
+    @classmethod
+    def list(cls):
         """
             Récupération de la liste de l'ensemble des joueurs
         """
@@ -149,7 +151,8 @@ class Player:
         else:
             return None
 
-    def count():
+    @classmethod
+    def count(cls):
         """
             Comptage du nombre de joueurs en base de donées
         """
@@ -159,7 +162,8 @@ class Player:
         player_number = len(db.search(query.type == 'player'))
         return player_number
 
-    def get_tournament_players(list_id):
+    @classmethod
+    def get_tournament_players(cls, list_id):
         """
             Récupération des joueurs d'un tournoi, grace à la liste d'identifiants placée en paramètre
         """
@@ -171,7 +175,8 @@ class Player:
             list_player.append(player)
         return list_player
 
-    def get_general_ranking():
+    @classmethod
+    def get_general_ranking(cls):
         """
             Classement général des joueurs du club
         """

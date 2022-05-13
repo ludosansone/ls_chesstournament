@@ -59,7 +59,8 @@ class Round:
             return None
 
     # Méthodes de classe
-    def count():
+    @classmethod
+    def count(cls):
         """
             Comptage du nombre de tours en base de données
         """
@@ -69,7 +70,8 @@ class Round:
         round_number = len(db.search(query.document_type == 'round'))
         return round_number
 
-    def get_tournament_rounds(rounds_id):
+    @classmethod
+    def get_tournament_rounds(cls, rounds_id):
         """
             Récupération des tours d'un tournoi en base de donnée grace à la liste d'identifiants placée en paramètre
         """

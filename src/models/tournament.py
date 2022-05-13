@@ -174,7 +174,8 @@ class Tournament:
         return instance_list_players
 
     # Méthodes de class
-    def read(id):
+    @classmethod
+    def read(cls, id):
         """
             Récupération du tournoi en base de donnée, dont l'identifiant est placé en paramètre
         """
@@ -202,7 +203,8 @@ class Tournament:
         else:
             return None
 
-    def list():
+    @classmethod
+    def list(cls):
         """
             Récupération de la liste de l'ensemble des tournois
         """
@@ -231,7 +233,8 @@ class Tournament:
         else:
             return None
 
-    def count():
+    @classmethod
+    def count(cls):
         """
             Comptage du nombre de tournois en base de donées
         """
