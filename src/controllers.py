@@ -53,10 +53,8 @@ def add_player_controller(param=None):
 
 @controller
 def list_players_controller(param=None):
-    # On récupère la liste des joueurs du club
     list_players = Player.list()
 
-    # On récupère l'élément de menu choisi par l'utilisateur
     if list_players is not None:
         item_menu = ListPlayersView.print_menu(list_players)
         if item_menu.isdigit() is True:
@@ -131,7 +129,6 @@ def list_tournaments_controller(param=None):
 
 @controller
 def tournament_controller(param=None):
-    # players = []
     tournament = Tournament.read(param)
 
     if tournament is not None:
