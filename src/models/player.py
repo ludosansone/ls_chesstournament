@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query
-from models.playerdelegate import PlayerDelegate
+from delegates.player import move_player_ranking
 
 
 class Player:
@@ -66,7 +66,7 @@ class Player:
         list_players.sort(key=lambda p: int(p.ranking))
 
         # On déplace le joueur dans le classement, puis on retourne la liste réordonnée
-        new_list_players = PlayerDelegate.move_player_ranking(self, new_player_ranking, list_players)
+        new_list_players = move_player_ranking(self, new_player_ranking, list_players)
 
         # On met à jour la propriété ranking de l'ensemble des joueurs
         i = 0

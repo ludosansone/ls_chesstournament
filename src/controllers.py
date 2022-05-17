@@ -54,6 +54,7 @@ def list_players_controller(param=None):
     list_players = Player.list()
 
     if list_players is not None:
+        list_players.sort(key=lambda p: p.firstname)
         item_menu = ListPlayersView.print_menu(list_players)
         if item_menu.isdigit() is True:
             return f"player_controller('{item_menu}')"

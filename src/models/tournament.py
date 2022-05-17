@@ -2,7 +2,7 @@ from functools import cmp_to_key
 from tinydb import TinyDB, Query
 from models.player import Player
 from models.round import Round
-from models.tournamentdelegate import TournamentDelegate
+from delegates.tournament import get_first_peers, get_all_scores, compare
 
 
 class Tournament:
@@ -97,7 +97,7 @@ class Tournament:
         """
 
         # On récupère la liste des dictionnaires de joueurs, ordonnée pour le premier tour
-        first_round_players = TournamentDelegate.get_first_peers(self)
+        first_round_players = get_first_peers(self)
 
         # On récupère la liste des instances de joueurs, à partir de la liste de dictionnaires récupérée ci-dessus
         instance_first_round_players = Player.get_tournament_players(first_round_players)
@@ -119,10 +119,10 @@ class Tournament:
         rounds = Round.get_tournament_rounds(self.rounds)
 
         # On récupère les joueurs avec leur score des tours précédents, dans une liste de dictionnaires
-        list_players = TournamentDelegate.get_all_scores(rounds)
+        list_players = get_all_scores(rounds)
 
         # On trie les joueurs selon leur nombre de points, ou selon leur rang en cas d'égalité
-        list_players.sort(key=cmp_to_key(TournamentDelegate.compare))
+        list_players.sort(key=cmp_to_key(compare))
 
         # On réorganise la liste des joueurs du tournoi, avec les paires nouvellement constituées
         self.players = []
