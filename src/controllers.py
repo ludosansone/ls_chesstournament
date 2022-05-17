@@ -136,7 +136,7 @@ def tournament_controller(param=None):
         if tournament.step == "1":
             tournament.get_tournament_first_ranking(players)
         elif tournament.step != "finish":
-            tournament.get_other_round_players(rounds = Round.get_tournament_rounds(tournament.rounds))
+            tournament.get_other_round_players(rounds)
 
         TournamentView.print_tournament_details(tournament)
         TournamentView.print_tournament_players(Player.get_tournament_players(tournament.players), tournament.step)
@@ -169,7 +169,7 @@ def play_round_controller(param=None):
             tournament.players.append(player['player_id'])
         instance_list_players = Player.get_tournament_players(tournament.players)
 
-    dict_round = PlayRoundView.print_view(instance_list_players )
+    dict_round = PlayRoundView.print_view(instance_list_players)
     dict_round['name'] = f"Round {tournament.step}"
     instance_round = Round(
         dict_round['name'],

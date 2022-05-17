@@ -70,7 +70,7 @@ class Tournament:
             'step': self.step,
         }, (query.id == self.id) & (query.type == "tournament"))
 
-    def get_tournament_first_ranking(self, instance_list_players ):
+    def get_tournament_first_ranking(self, instance_list_players):
         """
             Classement des joueurs pour le premier round du tournoi, en fonction de leur position au classement général
         """
@@ -95,7 +95,6 @@ class Tournament:
         first_round_players = get_first_peers(self)
 
         return first_round_players
-
 
     def get_other_round_players(self, rounds):
         """

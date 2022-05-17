@@ -13,6 +13,7 @@ def get_first_peers(tournament):
         i += 1
     return list_players
 
+
 def get_all_scores(rounds):
     round_index = 0
     list_players = []
@@ -48,6 +49,7 @@ def get_all_scores(rounds):
             match_number += 1
         round_index += 1
     return list_players
+
 
 def compare(p1, p2):
     """
