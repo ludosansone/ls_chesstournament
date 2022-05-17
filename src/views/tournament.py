@@ -25,8 +25,14 @@ class TournamentView:
         else:
             print("Avancement : Tournoi terminé")
 
-    def print_tournament_players(players):
-        print("\nParticipants\n")
+    def print_tournament_players(players, step):
+        title = "Classement Actuel"
+        if step == "1":
+            title = "Participants"
+        elif step == "finish":
+            title = "Classement Final"
+
+        print(f"{title}\n")
 
         for player in players:
             print(f"{player.firstname} {player.lastname}")

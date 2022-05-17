@@ -72,15 +72,12 @@ class Tournament:
             'step': self.step,
         }, (query.id == self.id) & (query.type == "tournament"))
 
-    def get_tournament_first_ranking(self):
+    def get_tournament_first_ranking(self, instance_list_players ):
         """
             Classement des joueurs pour le premier round du tournoi, en fonction de leur position au classement général
         """
 
-        # On récupère l'ensemble des instances des joueurs participant au tournoi
-        instance_list_players = Player.get_tournament_players(self.players)
-
-        # On trie les joueurs selon leur classement général
+        # On trie les joueurs selon leur position dans le classement général
         instance_list_players.sort(key=lambda p: p.ranking)
 
         # On réorganise la liste des joueurs du tournoi, en fonction du classement général
@@ -93,23 +90,15 @@ class Tournament:
 
     def get_first_round_players(self):
         """
-            consttitution des paires de joueurs pour le premier tour du tournoi
+            Consttitution des paires de joueurs pour le premier tour du tournoi
         """
 
         # On récupère la liste des dictionnaires de joueurs, ordonnée pour le premier tour
         first_round_players = get_first_peers(self)
 
-        # On récupère la liste des instances de joueurs, à partir de la liste de dictionnaires récupérée ci-dessus
-        instance_first_round_players = Player.get_tournament_players(first_round_players)
+        return first_round_players
 
-        # On réorganise la liste des joueurs du tournoi, en fonction des paires de joueurs constituées
-        self.players = []
-
-        for player in instance_first_round_players:
-            self.players.append(player.id)
-
-        return instance_first_round_players
-
+        
     def get_other_round_players(self):
         """
             constitution des paires de joueurs pour les autres rounds du tournoi
@@ -174,26 +163,23 @@ class Tournament:
         db = TinyDB('db.json')
         query = Query()
         results = db.search(query.type == 'tournament')
-        if results is not []:
-            list_tournaments = []
-            for result in results:
-                tournament = Tournament(
-                    result['name'],
-                    result['place'],
-                    result['dates'],
-                    result['rounds_number'],
-                    result['rounds'],
-                    result['players'],
-                    result['time_control'],
-                    result['description'],
-                )
-                tournament.type = result['type']
-                tournament.id = result['id']
-                tournament.step = result['step']
-                list_tournaments.append(tournament)
-            return list_tournaments
-        else:
-            return None
+        list_tournaments = []
+        for result in results:
+            tournament = Tournament(
+                result['name'],
+                result['place'],
+                result['dates'],
+                result['rounds_number'],
+                result['rounds'],
+                result['players'],
+                result['time_control'],
+                result['description'],
+            )
+            tournament.type = result['type']
+            tournament.id = result['id']
+            tournament.step = result['step']
+            list_tournaments.append(tournament)
+        return list_tournaments
 
     @classmethod
     def count(cls):
