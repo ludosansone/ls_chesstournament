@@ -3,11 +3,11 @@ from core.decorators import menu
 
 class ListPlayersView:
     @menu("Liste des Joueurs")
-    def print_menu(datas=None):
+    def print_menu(players=None):
         menu = []
 
-        if datas is not []:
-            for player in datas:
+        if players is not []:
+            for player in players:
                 new_item_menu = {'label': f"{player.firstname} {player.lastname}", 'id': player.id[0]}
                 menu.append(new_item_menu)
         else:
