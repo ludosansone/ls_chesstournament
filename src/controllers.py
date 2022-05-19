@@ -22,7 +22,6 @@ from views.tournamentrounds import TournamentRoundsView
 from views.tournamentmatchs import TournamentMatchsView
 
 
-
 @controller
 def home_controller(param=None):
     item_menu = HomeView.print_menu()
@@ -235,8 +234,11 @@ def logs_controller(param=None):
 @controller
 def players_alphabetic_order_controller(param=None):
     tournament = Tournament.read(param)
+    list_players = Player.get_tournament_players(tournament.players)
 
-    PlayersAlphabeticOrderView.print_view(tournament)
+    list_players.sort(key=lambda p: p.lastname)
+
+    PlayersAlphabeticOrderView.print_view(list_players)
     item_menu = PlayersAlphabeticOrderView.print_menu(tournament)
     return item_menu
 
@@ -244,8 +246,9 @@ def players_alphabetic_order_controller(param=None):
 @controller
 def players_ranking_order_controller(param=None):
     tournament = Tournament.read(param)
+    list_players = Player.get_tournament_players(tournament.players)
 
-    PlayersRankingOrderView.print_view(tournament)
+    PlayersRankingOrderView.print_view(list_players)
     item_menu = PlayersRankingOrderView.print_menu(tournament)
     return item_menu
 
@@ -253,8 +256,9 @@ def players_ranking_order_controller(param=None):
 @controller
 def tournament_rounds_controller(param=None):
     tournament = Tournament.read(param)
+    rounds = Round.get_tournament_rounds(tournament.rounds)
 
-    TournamentRoundsView.print_view(tournament)
+    TournamentRoundsView.print_view(rounds)
     item_menu = TournamentRoundsView.print_menu(tournament)
     return item_menu
 
@@ -262,10 +266,12 @@ def tournament_rounds_controller(param=None):
 @controller
 def tournament_matchs_controller(param=None):
     tournament = Tournament.read(param)
+    rounds = Round.get_tournament_rounds(tournament.rounds)
 
-    TournamentMatchsView.print_view(tournament)
+    TournamentMatchsView.print_view(rounds)
     item_menu = TournamentMatchsView.print_menu(tournament)
     return item_menu
+
 
 def exit_controller():
     print("A bientôt dans Chess Tournament")

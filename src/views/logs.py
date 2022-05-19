@@ -21,4 +21,8 @@ class LogsView:
                 'label': 'Matchs du tournoi',
                 'id': f"tournament_matchs_controller('{datas.id}')"
             },
+            {
+                'label': 'Retour aux détails du tournoi',
+                'id': f"tournament_controller('{datas.id}')"
+            }
         ]
