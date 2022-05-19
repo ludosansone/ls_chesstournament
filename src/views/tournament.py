@@ -46,6 +46,7 @@ class TournamentView:
 
         if datas.step != "1":
             menu.append({'label': 'Voir le détail des tours terminés', 'id': f"rounds_controller('{datas.id}')"})
+            menu.append({'label': 'Rapports', 'id': f"logs_controller('{datas.id}')"})
 
         menu.append({'label': 'Retour à la liste des tournois', 'id': 'list_tournaments_controller'})
         menu.append({'label': 'Retour à la gestion des tournois', 'id': 'tournaments_controller'})

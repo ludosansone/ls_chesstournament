@@ -15,6 +15,12 @@ from views.playround import PlayRoundView
 from views.generalranking import GeneralRankingView
 from views.rounds import RoundsView
 from views.changeplayerranking import ChangePlayerRankingView
+from views.logs import LogsView
+from views.playersalphabeticorder import PlayersAlphabeticOrderView
+from views.playersrankingorder import PlayersRankingOrderView
+from views.tournamentrounds import TournamentRoundsView
+from views.tournamentmatchs import TournamentMatchsView
+
 
 
 @controller
@@ -217,6 +223,49 @@ def change_player_ranking_controller(param=None):
 
     return f"player_controller('{param}')"
 
+
+@controller
+def logs_controller(param=None):
+    tournament = Tournament.read(param)
+
+    item_menu = LogsView.print_menu(tournament)
+    return item_menu
+
+
+@controller
+def players_alphabetic_order_controller(param=None):
+    tournament = Tournament.read(param)
+
+    PlayersAlphabeticOrderView.print_view(tournament)
+    item_menu = PlayersAlphabeticOrderView.print_menu(tournament)
+    return item_menu
+
+
+@controller
+def players_ranking_order_controller(param=None):
+    tournament = Tournament.read(param)
+
+    PlayersRankingOrderView.print_view(tournament)
+    item_menu = PlayersRankingOrderView.print_menu(tournament)
+    return item_menu
+
+
+@controller
+def tournament_rounds_controller(param=None):
+    tournament = Tournament.read(param)
+
+    TournamentRoundsView.print_view(tournament)
+    item_menu = TournamentRoundsView.print_menu(tournament)
+    return item_menu
+
+
+@controller
+def tournament_matchs_controller(param=None):
+    tournament = Tournament.read(param)
+
+    TournamentMatchsView.print_view(tournament)
+    item_menu = TournamentMatchsView.print_menu(tournament)
+    return item_menu
 
 def exit_controller():
     print("A bientôt dans Chess Tournament")
