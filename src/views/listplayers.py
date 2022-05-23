@@ -4,6 +4,10 @@ from core.decorators import menu
 class ListPlayersView:
     @menu("Liste des Joueurs")
     def print_menu(players=None):
+        """
+            Affichage de la liste de tous les joueurs, par ordre alphabétique
+        """
+
         menu = []
 
         if players is not []:

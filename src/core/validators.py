@@ -2,6 +2,10 @@ import re
 
 
 def choice_is_valid(choice, max_index):
+    """
+        Vérification du choix entrée par l'utilisateur, dans le contexte d'un menu de navigation
+    """
+
     if choice.isdigit() is False:
         return False
     elif (int(choice) - 1) < 0 or (int(choice) - 1) > max_index:
@@ -11,6 +15,10 @@ def choice_is_valid(choice, max_index):
 
 
 def is_valid_string(str):
+    """
+        Vérification de la validité d'une chaine de caractère entrée par l'utilisateur
+    """
+
     if str == "":
         return False
     else:
@@ -18,6 +26,10 @@ def is_valid_string(str):
 
 
 def is_valid_sexe(str):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour le champ "sexe"
+    """
+
     if str == "h" or str == "f" or str == "Homme" or str == "Femme":
         return True
     else:
@@ -25,6 +37,10 @@ def is_valid_sexe(str):
 
 
 def is_valid_date(str):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour les champs "begin" et "end"
+    """
+
     if re.match(r"\d{2}/\d{2}/\d{4}", str) is None:
         return False
     else:
@@ -32,6 +48,11 @@ def is_valid_date(str):
 
 
 def is_valid_ranking(str, list_players):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour le champ "ranking"
+        En plus de la vérification du format, on vérifie aussi que la position n'est pas déjà occupée
+    """
+
     if str.isdigit() is True:
         if int(str) > 0:
             if int(str) > (len(list_players) + 1):
@@ -52,6 +73,11 @@ def is_valid_ranking(str, list_players):
 
 
 def is_valid_change_ranking(str, datas):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour le champ "ranking",
+        dans le cas d'une modification manuelle du classement
+    """
+
     if str == "" or str.isdigit() is False:
         return False
     elif int(str) > len(datas):
@@ -63,6 +89,10 @@ def is_valid_change_ranking(str, datas):
 
 
 def is_valid_confirmation(str):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour la confirmation d'envoi en base de données
+    """
+
     if str == "o" or str == "n":
         return True
     else:
@@ -70,6 +100,10 @@ def is_valid_confirmation(str):
 
 
 def is_valid_player(datas, id):
+    """
+        Vérification de la validité de l'identifiant du joueur, avant son ajout en base de données
+    """
+
     for data in datas:
         if data.id[0] == id:
             return True
@@ -77,6 +111,10 @@ def is_valid_player(datas, id):
 
 
 def is_valid_round_number(round_number):
+    """
+        Vérification de la validité de l'identifiant du tour, avant son ajout en base de données
+    """
+
     if round_number == "":
         round_number = '4'
     if round_number.isdigit() is True and round_number != '0':
@@ -86,6 +124,10 @@ def is_valid_round_number(round_number):
 
 
 def is_valid_time_control(time_control):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour le champ "time_control"
+    """
+
     if time_control == "":
         time_control = '1'
     if time_control.isdigit() is True:
@@ -95,6 +137,10 @@ def is_valid_time_control(time_control):
 
 
 def is_valid_score(str):
+    """
+        Vérification de la valeur entrée par l'utilisateur, pour le champ "score"
+    """
+
     if str == '0' or str == '1' or str == '0.5':
         return True
     else:

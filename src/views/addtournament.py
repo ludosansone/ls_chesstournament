@@ -5,6 +5,10 @@ from core.transformators import get_smart_time_control
 
 class AddTournamentView:
     def get_form_result(datas=None):
+        """
+            Récupération des résultats du formulaire d'ajout de tournoi
+        """
+
         local_datas = datas
         new_player = None
         i = 0

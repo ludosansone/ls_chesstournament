@@ -5,6 +5,9 @@ from models.player import Player
 
 class RoundsView:
     def print_rounds(rounds):
+        """
+            Affichage de tous les tours terminés d'un tournoi, avec tous leurs détails
+        """
 
         for round in rounds:
             match_number = 0
@@ -25,6 +28,10 @@ class RoundsView:
 
     @menu()
     def print_menu(param=None):
+        """
+            Affichage du menu de navigation de la vue
+        """
+
         return [
             {'label': 'Retour au détails du tournoi', 'id': f"tournament_controller('{param}')"}
         ]

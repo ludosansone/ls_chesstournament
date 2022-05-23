@@ -59,7 +59,7 @@ def list_players_controller(param=None):
     list_players = Player.list()
 
     if list_players is not None:
-        list_players.sort(key=lambda p: p.firstname)
+        list_players.sort(key=lambda p: p.lastname)
         item_menu = ListPlayersView.print_menu(list_players)
         if item_menu.isdigit() is True:
             return f"player_controller('{item_menu}')"
@@ -144,7 +144,10 @@ def tournament_controller(param=None):
             tournament.get_other_round_players(rounds)
 
         TournamentView.print_tournament_details(tournament)
-        TournamentView.print_tournament_players(Player.get_tournament_players(tournament.players), tournament.step)
+        if tournament.step == "1" or tournament.step == "finish":
+            TournamentView.print_ranking(Player.get_tournament_players(tournament.players), tournament.step)
+        else:
+            TournamentView.print_futur_matchs(Player.get_tournament_players(tournament.players))
 
         item_menu = TournamentView.print_menu(tournament)
 
@@ -158,20 +161,12 @@ def tournament_controller(param=None):
 def play_round_controller(param=None):
     tournament = Tournament.read(param)
     players = Player.get_tournament_players(tournament.players)
-    rounds = Round.get_tournament_rounds(tournament.rounds)
 
     if tournament.step == "1":
         tournament.get_tournament_first_ranking(players)
-        list_round_players = tournament.get_first_round_players()
-        instance_list_players = Player.get_tournament_players(list_round_players)
-        tournament.players = []
-        for player in instance_list_players:
-            tournament.players.append(player.id)
+        tournament.get_first_round_players()
+        instance_list_players = Player.get_tournament_players(tournament.players)
     elif tournament.step != "finish":
-        list_players = tournament.get_other_round_players(rounds)
-        tournament.players = []
-        for player in list_players:
-            tournament.players.append(player['player_id'])
         instance_list_players = Player.get_tournament_players(tournament.players)
 
     dict_round = PlayRoundView.print_view(instance_list_players)

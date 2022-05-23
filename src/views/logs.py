@@ -4,6 +4,10 @@ from core.decorators import menu
 class LogsView:
     @menu("Rapports")
     def print_menu(datas=None):
+        """
+            Affichage de la liste des rapports propres à un tournoi
+        """
+
         return [
             {
                 'label': 'Joueurs du tournoi par ordre alphabétique',

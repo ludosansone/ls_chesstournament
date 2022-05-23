@@ -1,6 +1,6 @@
 from functools import cmp_to_key
 from tinydb import TinyDB, Query
-from delegates.tournament import get_first_peers, get_all_scores, compare
+from delegates.tournament import get_first_peers, get_all_scores, compare, get_last_peers
 
 
 class Tournament:
@@ -94,7 +94,12 @@ class Tournament:
         # On récupère la liste des dictionnaires de joueurs, ordonnée pour le premier tour
         first_round_players = get_first_peers(self)
 
-        return first_round_players
+        self.players = []
+
+        for player in first_round_players:
+            self.players.append(player)
+
+        self.update()
 
     def get_other_round_players(self, rounds):
         """
@@ -107,7 +112,17 @@ class Tournament:
         # On trie les joueurs selon leur nombre de points, ou selon leur rang en cas d'égalité
         list_players.sort(key=cmp_to_key(compare))
 
-        return list_players
+        # S'il reste des matchs à jouer, on fait un autre trie, afin d'éviter que les joueurs se rencontrent à nouveau
+        if self.step != "finish":
+            list_players = get_last_peers(list_players, rounds)
+
+        # On met à jour la liste des joueurs du tournoi, dans l'ordre du nouveau classement
+        self.players = []
+
+        for player in list_players:
+            self.players.append(player['player_id'])
+
+        self.update()
 
     # Méthodes de class
     @classmethod

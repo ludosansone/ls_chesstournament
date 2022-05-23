@@ -4,6 +4,10 @@ from core.decorators import menu
 class ListTournamentsView:
     @menu("Liste des Tournois")
     def print_menu(datas=None):
+        """
+            Affichage de la liste de tous les tournois
+        """
+
         menu = []
 
         if datas is not []:

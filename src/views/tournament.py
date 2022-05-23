@@ -3,6 +3,10 @@ from core.decorators import menu
 
 class TournamentView:
     def print_tournament_details(tournament):
+        """
+            Affichage de tous les détails d'un tournoi
+        """
+
         print("Détails du Tournoi\n")
         print(f"{tournament.name}")
         print(f"{tournament.place}")
@@ -23,22 +27,36 @@ class TournamentView:
         if tournament.step != "finish":
             print(f"Avancement : Prêt à démarrer le tour {tournament.step}\n")
         else:
-            print("Avancement : Tournoi terminé")
+            print("Avancement : Tournoi terminé\n")
 
-    def print_tournament_players(players, step):
-        title = "Classement Actuel"
+    def print_ranking(players, step):
+        """
+            Affichage du classement actualisé d'un tournoi
+        """
+
         if step == "1":
-            title = "Participants"
+            print("Participants\n")
         elif step == "finish":
-            title = "Classement Final"
-
-        print(f"{title}\n")
+            print("Classement Final\n")
 
         for player in players:
             print(f"{player.firstname} {player.lastname}")
 
+    def print_futur_matchs(players):
+        i = 0
+        print("Matchs à venir\n")
+
+        while i < 7:
+            print(f"{players[i].firstname} {players[i].lastname} VS ", end='')
+            print(f"{players[i + 1].firstname} {players[i + 1].lastname}")
+            i += 2
+
     @menu()
     def print_menu(datas=None):
+        """
+            Affichage du menu de navigation de la vue
+        """
+
         menu = []
 
         if datas.step != "finish":

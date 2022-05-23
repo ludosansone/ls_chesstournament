@@ -1,4 +1,8 @@
 def get_smart_time_control(choice):
+    """
+        Récupération de la valeur intelligible  du contrôle de temps
+    """
+
     choices_dict = {
         '1': 'Bullet',
         '2': 'Blidtz',
@@ -8,6 +12,10 @@ def get_smart_time_control(choice):
 
 
 def get_smart_date_time(date_time):
+    """
+        Récupération de la date et de l'heure, à un format lisible
+    """
+
     year = date_time[0:4]
     mounth = date_time[5:7]
     day = date_time[8:10]

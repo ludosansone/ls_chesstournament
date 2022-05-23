@@ -5,6 +5,10 @@ from core.validators import is_valid_change_ranking
 
 class ChangePlayerRankingView:
     def print_view(player):
+        """
+            Modification de la position d'un joueur dans le classement général
+        """
+
         list_players = Player.list()
         new_player_ranking = ""
 

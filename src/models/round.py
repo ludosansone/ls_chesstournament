@@ -20,7 +20,7 @@ class Round:
     # méthodes d'instance
     def create(self):
         """
-            création d'un nouveau tour en base de données
+            Création d'un nouveau tour en base de données
         """
 
         db = TinyDB('db.json')

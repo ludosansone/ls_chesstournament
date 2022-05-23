@@ -1,6 +1,7 @@
 from controllers import home_controller
 
 
+# Point d'entrée du programme
 if __name__ == '__main__':
     try:
         home_controller()

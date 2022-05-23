@@ -4,6 +4,10 @@ from models.player import Player
 
 class TournamentMatchsView:
     def print_view(rounds):
+        """
+            Affichage de tous les matchs terminés d'un trounoi
+        """
+
         i = 1
 
         for round in rounds:
@@ -22,6 +26,10 @@ class TournamentMatchsView:
 
     @menu("")
     def print_menu(datas=None):
+        """
+            Affichage du menu de navigation de la vue
+        """
+
         return [
             {'label': 'Retour aux rapports', 'id': f"logs_controller('{datas.id}')"}
         ]

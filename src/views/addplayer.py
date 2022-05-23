@@ -3,6 +3,10 @@ from core.validators import is_valid_confirmation, is_valid_date, is_valid_ranki
 
 class AddPlayerView:
     def get_form_result(datas=None):
+        """
+            Récupération des résultats du formulaire d'ajout de joueur
+        """
+
         player_firstname = ""
         player_lastname = ""
         player_sexe = ""
