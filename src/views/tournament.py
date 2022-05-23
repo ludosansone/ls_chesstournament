@@ -43,6 +43,10 @@ class TournamentView:
             print(f"{player.firstname} {player.lastname}")
 
     def print_futur_matchs(players):
+        """
+            Affichage des matchs devant être disputés au prochain tour
+        """
+
         i = 0
         print("Matchs à venir\n")
 
