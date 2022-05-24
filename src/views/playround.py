@@ -4,6 +4,10 @@ from datetime import datetime
 
 class PlayRoundView:
     def print_view(players):
+        """
+            Affichage du déroulement d'un des tours du tournoi
+        """
+
         round = {}
         round['begin'] = str(datetime.now())
         matchs = []
@@ -16,7 +20,7 @@ class PlayRoundView:
             player2 = players[i + 1]
             print(f"Match {j} : {player1.firstname} {player1.lastname} VS {player2.firstname} {player2.lastname}")
             while True:
-                score_player1 = input(f"Saisissez le score de {player1.firstname} {player1.lastname} : ")
+                score_player1 = input(f"Saisissez le score de {player1.firstname} {player1.lastname} (0, 1, 0.5) : ")
                 if is_valid_score(score_player1) is True:
                     break
             while True:
