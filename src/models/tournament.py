@@ -81,23 +81,20 @@ class Tournament:
         # On réorganise la liste des joueurs du tournoi, en fonction du classement général
         self.players = []
 
-        for player in instance_list_players:
-            self.players.append(player.id)
+        self.players = [player.id for player in instance_list_players]
 
         return instance_list_players
 
     def get_first_round_players(self):
         """
-            Consttitution des paires de joueurs pour le premier tour du tournoi
+            Constitution des paires de joueurs pour le premier tour du tournoi
         """
 
         # On récupère la liste des dictionnaires de joueurs, ordonnée pour le premier tour
         first_round_players = get_first_peers(self)
 
-        self.players = []
-
-        for player in first_round_players:
-            self.players.append(player)
+        # On met à jour la liste des joueurs du tournoi
+        self.players = first_round_players
 
         self.update()
 
@@ -121,7 +118,6 @@ class Tournament:
 
         for player in list_players:
             self.players.append(player['player_id'])
-
         self.update()
 
     # Méthodes de class
