@@ -1,4 +1,4 @@
-from controllers import home_controller
+from controllers.home import home_controller
 
 
 # Point d'entrée du programme
